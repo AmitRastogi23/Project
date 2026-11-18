@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Applicant | SDC Pilkhuwa</title>
+  <link rel="stylesheet" href="/css/applicant/new.css" />
+</head>
+
+<body>
+  <div class="top-bar"></div>
+
+  <header>
+    <div class="brand">
+      <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+
+      <div class="brand-text">
+        <h1>SDC Pilkhuwa</h1>
+        <h2>Training Record Management System</h2>
+      </div>
+    </div>
+
+    <div class="organization">
+      <strong>Centre for Fire, Explosive and Environment Safety</strong>
+      <br />
+      Defence Research and Development Organisation
+      <br />
+      Ministry of Defence, Government of India
+    </div>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <div class="page-label">Training Records · Applicant Management</div>
+      <h1>Add New Applicant</h1>
+      <p>Enter the applicant details to add a new record to the training course.</p>
+    </section>
+
+    <section class="form-card">
+      <div class="form-header">
+        <h2>Applicant Information</h2>
+      </div>
+
+      <form action="/applicant/<%= courseDoc._id %>" method="post">
+        <div class="form-section">
+          <h3 class="section-title">Service & Personal Details</h3>
+
+          <div class="form-group">
+            <label for="department">Select Department</label>
+            <select name="department" id="department" required>
+              <option value="">Select Department</option>
+              <option value="Army">Army</option>
+              <option value="Indian AirForce">Indian AirForce</option>
+              <option value="Navy">Navy</option>
+              <option value="Drone">Drone</option>
+              <option value="CoastGuard">CoastGuard</option>
+              <option value="Munitions India Limited">Munitions India Limited</option>
+              <option value="LRDE , DRDO">LRDE , DRDO</option>
+              <option value="DMRE , DRDO">DMRE , DRDO</option>
+              <option value="DIHAR , DRDO">DIHAR , DRDO</option>
+              <option value="R&DE , DRDO">R&DE , DRDO</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+
+          <div class="form-group other-dept-group" id="otherDepartmentGroup">
+            <label for="otherDepartment">Specify Department</label>
+            <div class="other-dept-wrapper">
+              <input
+                type="text"
+                name="otherDepartment"
+                id="otherDepartment"
+                placeholder="e.g. BSF, CRPF, ITBP, etc."
+                autocomplete="off"
+              />
+              <span class="other-dept-hint">Please enter the full department name</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="personnelNumber">Personnel Number</label>
+            <input type="text" name="personnelNumber" id="personnelNumber" required />
+          </div>
+
+          <div class="form-group">
+            <label for="rank">Rank</label>
+            <input type="text" name="rank" id="rank" required />
+          </div>
+
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" required />
+          </div>
+
+          <div class="form-group">
+            <label for="unitAddress">Unit Address</label>
+            <input type="text" name="unitAddress" id="unitAddress" required />
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="section-title">Course Information</h3>
+
+          <div class="form-group">
+            <label>Course Details</label>
+
+            <div class="course-info">
+              <% let rem = courseDoc.courseNumber % 10; %>
+
+              <% if (rem === 1) { %>
+                <%= courseDoc.courseNumber %><sup>st</sup> <%= courseDoc.courseName %>
+              <% } else if (rem === 2) { %>
+                <%= courseDoc.courseNumber %><sup>nd</sup> <%= courseDoc.courseName %>
+              <% } else if (rem === 3) { %>
+                <%= courseDoc.courseNumber %><sup>rd</sup> <%= courseDoc.courseName %>
+              <% } else { %>
+                <%= courseDoc.courseNumber %><sup>th</sup> <%= courseDoc.courseName %>
+              <% } %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="reportingDate">Reporting Date</label>
+            <input type="date" name="reportingDate" id="reportingDate" required />
+          </div>
+
+          <div class="form-group">
+            <label>Noon Time</label>
+
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="noontime" value="ForeNoon" required />
+                Forenoon
+              </label>
+
+              <label class="radio-option">
+                <input type="radio" name="noontime" value="AfterNoon" />
+                Afternoon
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <h3 class="section-title">Contact & Movement Order Details</h3>
+
+          <div class="form-group">
+            <label for="contact">Contact Number</label>
+            <input type="tel" name="contact" id="contact" />
+          </div>
+
+          <div class="form-group">
+            <label for="MONumber">Movement Order Number</label>
+            <input type="text" name="MONumber" id="MONumber" />
+          </div>
+
+          <div class="form-group">
+            <label for="MODate">Movement Order Date</label>
+            <input type="date" name="MODate" id="MODate" />
+          </div>
+        </div>
+
+        <div class="submit-area">
+          <button type="submit">Add Applicant</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+    <br />
+    Training Record Management System
+  </footer>
+
+  <script>
+    const departmentSelect = document.getElementById("department");
+    const otherDeptGroup = document.getElementById("otherDepartmentGroup");
+    const otherDeptInput = document.getElementById("otherDepartment");
+
+    // Initial state - hidden
+    otherDeptGroup.classList.add("hidden");
+
+    departmentSelect.addEventListener("change", function () {
+      if (this.value === "Others") {
+        otherDeptGroup.classList.remove("hidden");
+        otherDeptInput.required = true;
+        otherDeptInput.focus(); // 👈 auto-focus for better UX
+      } else {
+        otherDeptGroup.classList.add("hidden");
+        otherDeptInput.required = false;
+        otherDeptInput.value = "";
+      }
+    });
+  </script>
+</body>
+</html>

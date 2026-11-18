@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Authorities | SDC Pilkhuwa</title>
+  <link rel="stylesheet" href="/css/signatory/show.css" />
+</head>
+<body>
+  <div class="authorities-page">
+    <div class="authorities-container">
+      <div class="authorities-header">
+        <h1>Edit Authorities</h1>
+        <p>
+          Update the designations and names of the current authorities.
+          These details will be used whenever a new certificate is generated.
+        </p>
+      </div>
+
+      <div class="authorities-card">
+        <form id="authorityForm">
+          <div class="authority-header">
+            <div>Occupation</div>
+            <div>Designation</div>
+            <div>Name</div>
+          </div>
+
+          <% signDoc.authorities.forEach((authority) => { %>
+            <div class="authority-field">
+              <input
+                type="hidden"
+                class="authority-key"
+                value="<%= authority.key %>"
+              />
+
+              <div class="authority-key-display">
+                <%= authority.key
+                  .replace(/([A-Z])/g, " $1")
+                  .replace(/^./, function(str) { return str.toUpperCase(); }) %>
+              </div>
+
+              <input
+                class="authority-designation"
+                type="text"
+                value="<%= authority.designation || '' %>"
+                placeholder="Enter designation"
+                required
+              />
+
+              <input
+                class="authority-name"
+                type="text"
+                value="<%= authority.name || '' %>"
+                placeholder="Enter name"
+                required
+              />
+            </div>
+          <% }); %>
+
+          <div class="authorities-footer">
+            <button type="submit" class="save-authorities-btn">
+              Save Changes
+            </button>
+          </div>
+        </form>
+
+        <p id="message" class="authorities-message"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/signatory/show.js"></script>
+</body>
+</html>

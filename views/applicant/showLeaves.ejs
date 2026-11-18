@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leaves Report | SDC Pilkhuwa</title>
+  <link rel="stylesheet" href="/css/applicant/showLeaves.css" />
+</head>
+
+<body>
+  <div class="top-bar"></div>
+
+  <header>
+    <div class="brand">
+      <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+      <div class="brand-text">
+        <h1>SDC Pilkhuwa</h1>
+        <h2>Training Record Management System</h2>
+      </div>
+    </div>
+    <div class="organization">
+      <strong>Centre for Fire, Explosive and Environment Safety</strong>
+      <br />
+      Defence Research and Development Organisation
+      <br />
+      Ministry of Defence, Government of India
+    </div>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <div class="page-label">Training Records · Attendance</div>
+      <h1>Leaves Report</h1>
+      <p>View and manage leaves taken by applicants enrolled in this course.</p>
+    </section>
+
+    <!-- ===== MARKS INFO + EXPORT BUTTONS ===== -->
+    <section class="marks-info-card">
+      <div class="marks-info-left">
+        <span class="marks-label">📊 Marks Criteria</span>
+        <div class="marks-details">
+          <span class="marks-item">
+            <span class="marks-badge min">Min Passing</span>
+            <strong>06</strong> / 10
+          </span>
+          <span class="marks-item">
+            <span class="marks-badge max">Max Marks</span>
+            <strong>10</strong> / 10
+          </span>
+          <span class="marks-item">
+            <span class="marks-badge cut">Per Leave Cut</span>
+            <strong>0.5</strong> marks
+          </span>
+        </div>
+      </div>
+      <div class="marks-info-right">
+        <a href="/applicant/<%= enrollDoc[0].courseId %>/attendance/pdf" class="export-btn pdf-btn">
+        📄 Export to PDF
+        </a>
+        <a href="/applicant/<%= enrollDoc[0].courseId %>/attendance/excel" class="export-btn excel-btn">
+        📊 Export to Excel
+        </a>
+      </div>
+    </section>
+
+    <section class="table-card">
+      <div class="table-header">
+        <h2>Applicant Leaves Details</h2>
+      </div>
+
+      <div class="table-wrapper">
+        <% if (enrollDoc && enrollDoc.length > 0) { %>
+          <table>
+            <thead>
+              <tr>
+                <th>S. No.</th>
+                <th>Personnel No.</th>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Leaves Taken (Dates)</th>
+                <th>Total Leaves</th>
+                <th>Total Marks</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% enrollDoc.forEach((enrollment, index) => { 
+                const leaves = enrollment.leaves || [];
+                const leaveDates = leaves.length > 0
+                  ? (() => {
+                      const dates = leaves.map(l =>
+                        new Date(l).toLocaleDateString("en-IN")
+                      );
+                      if (dates.length === 1) {
+                        return dates[0];
+                      }
+                      if (dates.length === 2) {
+                        return `${dates[0]} and ${dates[1]}`;
+                      }
+                      return `${dates.slice(0, -1).join(", ")} and ${dates[dates.length - 1]}`;
+                    })()
+                  : "No leave taken";
+                const totalLeaves = leaves.length;
+                const totalMarks = enrollment.totalMarks !== undefined ? enrollment.totalMarks : 10;
+              %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td><%= enrollment.applicantId.personnelNumber %></td>
+                  <td><%= enrollment.applicantId.rank %></td>
+                  <td><strong><%= enrollment.applicantId.name %></strong></td>
+                  <td class="leave-dates"><%= leaveDates %></td>
+                  <td class="total-leaves">
+                    <% if (totalLeaves === 0) { %>
+                      <span class="badge badge-success">0</span>
+                    <% } else if (totalLeaves <= 3) { %>
+                      <span class="badge badge-warning"><%= totalLeaves %></span>
+                    <% } else { %>
+                      <span class="badge badge-danger"><%= totalLeaves %></span>
+                    <% } %>
+                  </td>
+                  <td>
+                    <strong><%= totalMarks.toFixed(1) %> / 10</strong>
+                    <% if (totalMarks === 0) { %>
+                      <span style="color: var(--red); font-size: 12px; display: block;">(Zero)</span>
+                    <% } else if (totalMarks < 6) { %>
+                      <span style="color: var(--red); font-size: 12px; display: block;">(Fail)</span>
+                    <% } else if (totalMarks < 7) { %>
+                      <span style="color: var(--yellow); font-size: 12px; display: block;">(Low)</span>
+                    <% } %>
+                  </td>
+                  <td>
+                    <button class="add-leave-btn" onclick="openLeaveModal('<%= enrollment._id %>')">
+                      + Add Leave
+                    </button>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+
+          <!-- Total Summary -->
+          <div class="summary-section">
+            <div>
+              <strong>Total Applicants:</strong>
+              <span class="summary-number"><%= enrollDoc.length %></span>
+            </div>
+            <div>
+              <strong>Total Leaves Taken:</strong>
+              <span class="summary-number">
+                <%= enrollDoc.reduce((sum, e) => sum + (e.leaves ? e.leaves.length : 0), 0) %>
+              </span>
+            </div>
+            <div>
+              <strong>Average Marks:</strong>
+              <span class="summary-number">
+                <% 
+                  const totalMarksSum = enrollDoc.reduce((sum, e) => sum + (e.totalMarks || 10), 0);
+                  const avgMarks = enrollDoc.length > 0 ? (totalMarksSum / enrollDoc.length) : 0;
+                %>
+                <%= avgMarks.toFixed(1) %> / 10
+              </span>
+            </div>
+            <div>
+              <strong>Pass %:</strong>
+              <span class="summary-number">
+                <% 
+                  const passed = enrollDoc.filter(e => (e.totalMarks || 10) >= 6).length;
+                  const passPercent = enrollDoc.length > 0 ? (passed / enrollDoc.length) * 100 : 0;
+                %>
+                <%= passPercent.toFixed(0) %>% 
+                (<%= passed %>/<%= enrollDoc.length %>)
+              </span>
+            </div>
+          </div>
+
+        <% } else { %>
+          <div class="empty">
+            No enrollment records found for this course.
+          </div>
+        <% } %>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+    <br />
+    Training Record Management System
+  </footer>
+
+  <!-- ===== LEAVE MODAL (POST Form) ===== -->
+  <div id="leaveModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Add Leave</h3>
+        <button class="modal-close" onclick="closeLeaveModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="leaveForm" method="POST">
+          <input type="hidden" name="enrollmentId" id="modalEnrollmentId" />
+          
+          <div class="form-group">
+            <label for="leaveDate">Select Date</label>
+            <input type="date" name="date" id="leaveDate" required />
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-cancel" onclick="closeLeaveModal()">Cancel</button>
+            <button type="submit" class="btn-save">Save Leave</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/applicant/showLeaves.js"></script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Address Store</title>
+  <link rel="stylesheet" href="/css/address/show.css" />
+</head>
+<body>
+  <div class="container">
+
+    <!-- ═════════ Page Header ═════════ -->
+    <header class="page-header">
+      <div class="page-header-text">
+        <h1>Address Store</h1>
+        <p class="subtitle">
+          <span id="totalCount"><%= addresses.length %></span> records saved
+        </p>
+      </div>
+
+      <button class="add-address-btn" id="openAddModal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Add Address
+      </button>
+    </header>
+
+    <!-- ═════════ Address Table ═════════ -->
+    <% if (addresses && addresses.length > 0) { %>
+      <div class="table-card">
+        <table class="address-table">
+          <thead>
+            <tr>
+              <th class="col-sno">S.No</th>
+              <th class="col-name">Name</th>
+              <th class="col-type">Type</th>
+              <th class="col-address">Address</th>
+              <th class="col-phone">Phone</th>
+              <th class="col-email">Email</th>
+              <th class="col-action"></th>
+            </tr>
+          </thead>
+          <tbody id="addressBody">
+            <% addresses.forEach((a, i) => { %>
+              <tr data-id="<%= a._id %>" data-name="<%= a.name %>">
+                <td class="col-sno"><%= i + 1 %></td>
+
+                <td class="col-name">
+                  <div class="name-cell">
+                    <span class="avatar"><%= a.name.charAt(0).toUpperCase() %></span>
+                    <span class="name-text"><%= a.name %></span>
+                  </div>
+                </td>
+
+                <td class="col-type">
+                  <% if (a.type === "Examiner") { %>
+                    <span class="pill pill-blue">Examiner</span>
+                  <% } else { %>
+                    <span class="pill pill-purple">Guest Faculty's Institute</span>
+                  <% } %>
+                </td>
+
+                <td class="col-address"><%= a.address %></td>
+
+                <td class="col-phone">
+                  <% if (a.phone) { %>
+                    <%= a.phone %>
+                  <% } else { %>
+                    <span class="muted">—</span>
+                  <% } %>
+                </td>
+
+                <td class="col-email">
+                  <% if (a.email) { %>
+                    <a href="mailto:<%= a.email %>"><%= a.email %></a>
+                  <% } else { %>
+                    <span class="muted">—</span>
+                  <% } %>
+                </td>
+
+                <td class="col-action">
+                  <div class="action-group">
+                    <button class="icon-btn edit" title="Edit" data-id="<%= a._id %>">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                           fill="none" stroke="currentColor" stroke-width="2"
+                           stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                      </svg>
+                    </button>
+
+                    <button class="icon-btn delete" title="Delete"
+                            data-id="<%= a._id %>" data-name="<%= a.name %>">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                           fill="none" stroke="currentColor" stroke-width="2"
+                           stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                        <path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="empty-state">
+        <h2>No addresses yet</h2>
+        <p>Click "Add Address" to save your first record.</p>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- ═════════ Delete Confirmation Modal ═════════ -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal modal-confirm">
+      <div class="modal-icon icon-danger">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </div>
+      <h2 class="modal-title">Delete Address?</h2>
+      <p class="modal-text">
+        Are you sure you want to delete address of
+        <strong id="modalAddressName">this record</strong>?
+        This action cannot be undone.
+      </p>
+      <div class="modal-actions">
+        <button class="btn btn-cancel" id="cancelDelete">Cancel</button>
+        <button class="btn btn-danger" id="confirmDelete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═════════ Edit Modal ═════════ -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal modal-form">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">Edit Address</h2>
+          <p class="modal-subtitle">Update address information</p>
+        </div>
+        <button class="modal-close" id="closeEditModal" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="editForm" class="edit-form">
+        <input type="hidden" id="editId" />
+
+        <div class="form-row">
+          <label for="editType">Type <span class="req">*</span></label>
+          <select id="editType" required>
+            <option value="">Select type</option>
+            <option value="Examiner">Examiner</option>
+            <option value="Guest Faculty's Institute">Guest Faculty's Institute</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="editName">Name <span class="req">*</span></label>
+          <input type="text" id="editName" required />
+        </div>
+
+        <div class="form-row">
+          <label for="editAddress">Address <span class="req">*</span></label>
+          <textarea id="editAddress" rows="3" required></textarea>
+        </div>
+
+        <div class="form-row">
+          <label for="editPhone">Phone</label>
+          <input type="tel" id="editPhone" />
+        </div>
+
+        <div class="form-row">
+          <label for="editEmail">Email</label>
+          <input type="email" id="editEmail" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-cancel" id="cancelEdit">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveEdit">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═════════ Add Modal ═════════ -->
+  <div class="modal-overlay" id="addModal">
+    <div class="modal modal-form">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title">Add New Address</h2>
+          <p class="modal-subtitle">Fill in the address details</p>
+        </div>
+        <button class="modal-close" id="closeAddModal" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="addForm" class="edit-form">
+        <div class="form-row">
+          <label for="addType">Type <span class="req">*</span></label>
+          <select id="addType" required>
+            <option value="">Select type</option>
+            <option value="Examiner">Examiner</option>
+            <option value="Guest Faculty's Institute">Guest Faculty's Institute</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="addName">Name <span class="req">*</span></label>
+          <input type="text" id="addName" required />
+        </div>
+
+        <div class="form-row">
+          <label for="addAddress">Address <span class="req">*</span></label>
+          <textarea id="addAddress" rows="3" required></textarea>
+        </div>
+
+        <div class="form-row">
+          <label for="addPhone">Phone</label>
+          <input type="tel" id="addPhone" />
+        </div>
+
+        <div class="form-row">
+          <label for="addEmail">Email</label>
+          <input type="email" id="addEmail" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-cancel" id="cancelAdd">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveAdd">Add Address</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/address/show.js"></script>
+</body>
+</html>

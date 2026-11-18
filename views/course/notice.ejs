@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Practical ION | SDC Pilkhuwa</title>
+    <link rel="stylesheet" href="/css/course/notice.css" />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header class="page-header">
+        <div class="page-label">Training Records · Notices &amp; Documents</div>
+        <h1>Course Documents</h1>
+        <p>Download IONs, invites and manage examination requests.</p>
+      </header>
+
+      <div class="card-grid">
+        <a
+          href="/course/<%= courseId %>/practicalION"
+          class="action-card action-link"
+        >
+          <div class="card-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              ></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+          </div>
+          <div class="card-content">
+            <span class="card-label">Practical ION</span>
+            <span class="card-desc">Download ION for practical sessions</span>
+          </div>
+          <div class="card-arrow">→</div>
+        </a>
+
+        <button
+          class="action-card"
+          id="openModalBtn"
+          data-course-id="<%= courseId %>"
+        >
+          <div class="card-icon icon-green">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <div class="card-content">
+            <span class="card-label">Request Examiner &amp; Invigilator</span>
+            <span class="card-desc"
+              >Generate request letters for exam duties</span
+            >
+          </div>
+          <div class="card-arrow">→</div>
+        </button>
+
+        <button
+          class="action-card"
+          id="openVisitsModalBtn"
+          data-course-id="<%= courseId %>"
+        >
+          <div class="card-icon icon-purple">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <div class="card-content">
+            <span class="card-label">Instructional Visits ION</span>
+            <span class="card-desc">Download IONs for scheduled visits</span>
+          </div>
+          <div class="card-arrow">→</div>
+        </button>
+
+        <button
+          class="action-card"
+          id="downloadTheoryBtn"
+          data-course-id="<%= courseId %>"
+        >
+          <div class="card-icon icon-orange">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path
+                d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+              ></path>
+            </svg>
+          </div>
+          <div class="card-content">
+            <span class="card-label">Theory Lectures List</span>
+            <span class="card-desc">Download list of theory lectures</span>
+          </div>
+          <div class="card-arrow">→</div>
+        </button>
+
+        <button
+          class="action-card"
+          id="openGuestModalBtn"
+          data-course-id="<%= courseId %>"
+        >
+          <div class="card-icon icon-blue">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <div class="card-content">
+            <span class="card-label">Guest Faculty Invites</span>
+            <span class="card-desc"
+              >Download invites for guest faculty lectures</span
+            >
+          </div>
+          <div class="card-arrow">→</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═════════ Request Modal (unchanged) ═════════ -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Request for Examiner &amp; Invigilator</h3>
+          <span class="close-btn" id="closeModalBtn">&times;</span>
+        </div>
+
+        <form id="requestForm" class="modal-body">
+          <div class="form-group">
+            <label for="examinerSelect">Select Examiner</label>
+            <select id="examinerSelect" name="address" required>
+              <option value="" disabled selected>Loading examiners...</option>
+            </select>
+            <small id="examinerHint" class="hint"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="examType">Exam Type</label>
+            <select id="examType" name="examType" required>
+              <option value="" disabled selected>Select exam type</option>
+              <option value="MID-TERM">MID-TERM</option>
+              <option value="FINAL-TERM">FINAL-TERM</option>
+            </select>
+            <small id="examDateHint" class="hint"></small>
+          </div>
+
+          <div class="form-group">
+            <label for="marks">Marks</label>
+            <input
+              type="number"
+              id="marks"
+              name="marks"
+              placeholder="Enter total marks"
+              min="0"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="startTime">Start Time</label>
+              <input
+                type="time"
+                id="startTime"
+                name="startTime"
+                value="10:00"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="endTime">End Time</label>
+              <input
+                type="time"
+                id="endTime"
+                name="endTime"
+                value="13:00"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-cancel" id="cancelBtn">
+              Cancel
+            </button>
+            <button type="submit" class="btn-submit">Submit Request</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═════════ Instructional Visits Modal (unchanged) ═════════ -->
+    <div class="modal-overlay" id="visitsModalOverlay">
+      <div class="modal visits-modal">
+        <div class="modal-header">
+          <h3>Instructional Visits</h3>
+          <span class="close-btn" id="closeVisitsModalBtn">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="visitsLoading" class="visits-loading">Loading visits...</div>
+          <div id="visitsEmpty" class="visits-empty" style="display: none">
+            No instructional visits found for this course.
+          </div>
+          <div id="visitsList" class="visits-list"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" id="cancelVisitsBtn">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═════════ Guest Faculty Modal (unchanged) ═════════ -->
+    <div class="modal-overlay" id="guestModalOverlay">
+      <div class="modal visits-modal">
+        <div class="modal-header">
+          <h3>Guest Faculty Lectures</h3>
+          <span class="close-btn" id="closeGuestModalBtn">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div id="guestLoading" class="visits-loading">
+            Loading lectures...
+          </div>
+          <div id="guestEmpty" class="visits-empty" style="display: none">
+            No guest faculty lectures found for this course.
+          </div>
+          <div id="guestList" class="visits-list"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" id="cancelGuestBtn">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═════════ Guest Address Modal (unchanged) ═════════ -->
+    <div class="modal-overlay" id="guestAddressModalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Select Guest Faculty Institute</h3>
+          <span class="close-btn" id="closeGuestAddressBtn">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="guestInstituteSelect">Select Institute</label>
+            <select id="guestInstituteSelect" name="address" required>
+              <option value="" disabled selected>Loading institutes...</option>
+            </select>
+            <small id="guestInstituteHint" class="hint"></small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-cancel" id="cancelGuestAddressBtn">
+            Cancel
+          </button>
+          <button type="button" class="btn-submit" id="confirmGuestAddressBtn">
+            Download Invite
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/course/notice.js"></script>
+  </body>
+</html>

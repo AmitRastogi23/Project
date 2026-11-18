@@ -1,0 +1,612 @@
+[
+  {
+    "_id": "6ab821494d921face7a26781",
+    "department": "Munitions India Limited",
+    "personnelNumber": "MIL-95276",
+    "rank": "Major",
+    "name": "Rahul Shukla",
+    "unitAddress": "Munitions India Limited, Chanda",
+    "contact": 7497801027,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26782",
+    "department": "Army",
+    "personnelNumber": "IC-62437",
+    "rank": "Commander",
+    "name": "Dharmendra Kumar",
+    "unitAddress": "12 Para (SF), Agra",
+    "contact": 9916642410,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26783",
+    "department": "DIHAR , DRDO",
+    "personnelNumber": "DIHAR-91715",
+    "rank": "Major",
+    "name": "Ashok Roy",
+    "unitAddress": "DIHAR, Leh",
+    "contact": 8609406652,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26784",
+    "department": "R&DE , DRDO",
+    "personnelNumber": "RDE-58280",
+    "rank": "Commander",
+    "name": "Ajay Dubey",
+    "unitAddress": "DRDO SASE, Chandigarh",
+    "contact": 9893862812,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26785",
+    "department": "LRDE , DRDO",
+    "personnelNumber": "LRDE-66585",
+    "rank": "Subedar",
+    "name": "Mukesh Pandey",
+    "unitAddress": "LRDE, DRDO Complex, Bengaluru",
+    "contact": 9431627829,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26786",
+    "department": "Army",
+    "personnelNumber": "IC-29102",
+    "rank": "Wing Commander",
+    "name": "Arvind Joshi",
+    "unitAddress": "14 Corps Signal Regiment, Leh",
+    "contact": 9222818291,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26787",
+    "department": "Air Force",
+    "personnelNumber": "AF-88987",
+    "rank": "Naib Subedar",
+    "name": "Kuldeep Gupta",
+    "unitAddress": "Air Force Academy, Dundigal, Hyderabad",
+    "contact": 9813615066,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26788",
+    "department": "DIHAR , DRDO",
+    "personnelNumber": "DIHAR-34381",
+    "rank": "Major",
+    "name": "Vivek Rawat",
+    "unitAddress": "DIHAR, Leh",
+    "contact": 7086815330,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26789",
+    "department": "Navy",
+    "personnelNumber": "N-17446",
+    "rank": "Captain",
+    "name": "Amit Verma",
+    "unitAddress": "INS Shivaji, Lonavala",
+    "contact": 8878852096,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2678a",
+    "department": "Drona",
+    "personnelNumber": "DR-11329",
+    "rank": "Naib Subedar",
+    "name": "Vijay Singh",
+    "unitAddress": "DRONA Academy, Gurugram",
+    "contact": 8436550776,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2678b",
+    "department": "Drona",
+    "personnelNumber": "DR-35155",
+    "rank": "Flight Lieutenant",
+    "name": "Dinesh Choudhary",
+    "unitAddress": "DRONA Academy, Gurugram",
+    "contact": 9915136040,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2678c",
+    "department": "CoastGuard",
+    "personnelNumber": "CG-37945",
+    "rank": "Subedar",
+    "name": "Vivek Gupta",
+    "unitAddress": "Coast Guard Air Station, Daman",
+    "contact": 9471625360,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2678d",
+    "department": "Army",
+    "personnelNumber": "IC-94391",
+    "rank": "Lieutenant Commander",
+    "name": "Suresh Yadav",
+    "unitAddress": "23 Armoured Regiment, Ambala",
+    "contact": 8473766329,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2678e",
+    "department": "DIHAR , DRDO",
+    "personnelNumber": "DIHAR-21795",
+    "rank": "Squadron Leader",
+    "name": "Ashok Choudhary",
+    "unitAddress": "DIHAR, Leh",
+    "contact": 8732167010,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2678f",
+    "department": "Munitions India Limited",
+    "personnelNumber": "MIL-43226",
+    "rank": "Lieutenant Commander",
+    "name": "Alok Yadav",
+    "unitAddress": "Munitions India Limited, Chanda",
+    "contact": 7011562582,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26790",
+    "department": "DMRE , DRDO",
+    "personnelNumber": "DMRE-16587",
+    "rank": "Flight Lieutenant",
+    "name": "Sachin Joshi",
+    "unitAddress": "DMRE, Pune",
+    "contact": 7607226412,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26791",
+    "department": "DMRE , DRDO",
+    "personnelNumber": "DMRE-12189",
+    "rank": "Station Officer",
+    "name": "Kuldeep Verma",
+    "unitAddress": "DMRE, Pune",
+    "contact": 7811064297,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26792",
+    "department": "LRDE , DRDO",
+    "personnelNumber": "LRDE-52692",
+    "rank": "Flight Lieutenant",
+    "name": "Saurabh Patel",
+    "unitAddress": "LRDE, Timarpur, Delhi",
+    "contact": 8569427758,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26793",
+    "department": "Air Force",
+    "personnelNumber": "AF-43752",
+    "rank": "Lieutenant",
+    "name": "Kuldeep Malik",
+    "unitAddress": "Air Force Academy, Dundigal, Karnataka",
+    "contact": 8287662187,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26794",
+    "department": "LRDE , DRDO",
+    "personnelNumber": "LRDE-69817",
+    "rank": "Lieutenant",
+    "name": "Praveen Choudhary",
+    "unitAddress": "LRDE, Timarpur, Delhi",
+    "contact": 8154479672,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26795",
+    "department": "Drona",
+    "personnelNumber": "DR-35767",
+    "rank": "Wing Commander",
+    "name": "Manish Dubey",
+    "unitAddress": "DRONA Training Centre, Delhi",
+    "contact": 8146170307,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26796",
+    "department": "Navy",
+    "personnelNumber": "N-16994",
+    "rank": "Havildar",
+    "name": "Vishal Bhardwaj",
+    "unitAddress": "INS Chilka, Odisha",
+    "contact": 8320013925,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26797",
+    "department": "Army",
+    "personnelNumber": "IC-43724",
+    "rank": "Naib Subedar",
+    "name": "Hemant Kapoor",
+    "unitAddress": "23 Armoured Regiment, Ambala",
+    "contact": 8462758685,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26798",
+    "department": "Munitions India Limited",
+    "personnelNumber": "MIL-53734",
+    "rank": "Lieutenant Commander",
+    "name": "Saurabh Chauhan",
+    "unitAddress": "Munitions India Limited, Nalanda",
+    "contact": 7018522602,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a26799",
+    "department": "Navy",
+    "personnelNumber": "N-68575",
+    "rank": "Lieutenant Commander",
+    "name": "Sachin Mishra",
+    "unitAddress": "Naval Dockyard, Mumbai",
+    "contact": 8806020993,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2679a",
+    "department": "DMRE , DRDO",
+    "personnelNumber": "DMRE-52801",
+    "rank": "Flight Lieutenant",
+    "name": "Sanjay Tiwari",
+    "unitAddress": "DMRE, DRDO Complex, Pune",
+    "contact": 7470660680,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2679b",
+    "department": "Army",
+    "personnelNumber": "IC-80439",
+    "rank": "Subedar",
+    "name": "Sachin Tiwari",
+    "unitAddress": "12 Para (SF), Agra",
+    "contact": 8923812077,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2679c",
+    "department": "Air Force",
+    "personnelNumber": "AF-31222",
+    "rank": "Commander",
+    "name": "Kuldeep Mishra",
+    "unitAddress": "Air Force Station, Hindon",
+    "contact": 9326861590,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2679d",
+    "department": "Navy",
+    "personnelNumber": "N-35616",
+    "rank": "Station Officer",
+    "name": "Abhishek Verma",
+    "unitAddress": "Naval Dockyard, Mumbai",
+    "contact": 9397850826,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2679e",
+    "department": "Army",
+    "personnelNumber": "IC-94950",
+    "rank": "Captain",
+    "name": "Hemant Kapoor",
+    "unitAddress": "23 Armoured Regiment, Ambala",
+    "contact": 7188405786,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a2679f",
+    "department": "Navy",
+    "personnelNumber": "N-87069",
+    "rank": "Wing Commander",
+    "name": "Abhishek Rastogi",
+    "unitAddress": "INS Vikramaditya, Karwar",
+    "contact": 7513212686,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267a0",
+    "department": "R&DE , DRDO",
+    "personnelNumber": "RDE-38199",
+    "rank": "Squadron Leader",
+    "name": "Rakesh Malik",
+    "unitAddress": "R&DE (E), Pune",
+    "contact": 7189131378,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267a1",
+    "department": "Drona",
+    "personnelNumber": "DR-96767",
+    "rank": "Captain",
+    "name": "Abhishek Tiwari",
+    "unitAddress": "DRONA Academy, Gurugram",
+    "contact": 9985194548,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267a2",
+    "department": "R&DE , DRDO",
+    "personnelNumber": "RDE-18598",
+    "rank": "Squadron Leader",
+    "name": "Anil Gupta",
+    "unitAddress": "R&DE (Engrs), Pune",
+    "contact": 9681467407,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267a3",
+    "department": "Drona",
+    "personnelNumber": "DR-96216",
+    "rank": "Lieutenant Commander",
+    "name": "Amit Saxena",
+    "unitAddress": "DRONA Training Centre, Delhi",
+    "contact": 8007146764,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267a4",
+    "department": "R&DE , DRDO",
+    "personnelNumber": "RDE-29653",
+    "rank": "Squadron Leader",
+    "name": "Saurabh Dubey",
+    "unitAddress": "DRDO SASE, Chandigarh",
+    "contact": 9042038909,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267a5",
+    "department": "Army",
+    "personnelNumber": "IC-57433",
+    "rank": "Wing Commander",
+    "name": "Alok Malik",
+    "unitAddress": "14 Corps Signal Regiment, Leh",
+    "contact": 7523925562,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267a6",
+    "department": "Navy",
+    "personnelNumber": "N-73973",
+    "rank": "Squadron Leader",
+    "name": "Mahesh Patel",
+    "unitAddress": "INS Hansa, Goa",
+    "contact": 8443968002,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267a7",
+    "department": "Air Force",
+    "personnelNumber": "AF-17746",
+    "rank": "Naib Subedar",
+    "name": "Vivek Nair",
+    "unitAddress": "Air Force Station, Ambala",
+    "contact": 8078162780,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267a8",
+    "department": "DIHAR , DRDO",
+    "personnelNumber": "DIHAR-61662",
+    "rank": "Leading Fireman",
+    "name": "Suresh Yadav",
+    "unitAddress": "DIHAR, DRDO Complex, Leh",
+    "contact": 8269421904,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267a9",
+    "department": "Munitions India Limited",
+    "personnelNumber": "MIL-95893",
+    "rank": "Major",
+    "name": "Hemant Dubey",
+    "unitAddress": "Munitions India Limited, Nalanda",
+    "contact": 9281205765,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267aa",
+    "department": "Navy",
+    "personnelNumber": "N-96325",
+    "rank": "Squadron Leader",
+    "name": "Jitendra Malik",
+    "unitAddress": "INS Hansa, Goa",
+    "contact": 8675705481,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267ab",
+    "department": "LRDE , DRDO",
+    "personnelNumber": "LRDE-79056",
+    "rank": "Havildar",
+    "name": "Pradeep Bhardwaj",
+    "unitAddress": "LRDE, Bengaluru",
+    "contact": 7459621823,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267ac",
+    "department": "Munitions India Limited",
+    "personnelNumber": "MIL-45197",
+    "rank": "Station Officer",
+    "name": "Sanjay Kapoor",
+    "unitAddress": "Munitions India Limited, Bhandara",
+    "contact": 8813171710,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267ad",
+    "department": "Navy",
+    "personnelNumber": "N-32931",
+    "rank": "Leading Fireman",
+    "name": "Suresh Mishra",
+    "unitAddress": "INS Shivaji, Lonavala",
+    "contact": 9651823810,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267ae",
+    "department": "Army",
+    "personnelNumber": "IC-26305",
+    "rank": "Leading Fireman",
+    "name": "Ashok Patel",
+    "unitAddress": "14 Corps Signal Regiment, Leh",
+    "contact": 9047851578,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267af",
+    "department": "Drona",
+    "personnelNumber": "DR-21836",
+    "rank": "Havildar",
+    "name": "Sachin Shukla",
+    "unitAddress": "DRONA Academy, Gurugram",
+    "contact": 7694043010,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267b0",
+    "department": "CoastGuard",
+    "personnelNumber": "CG-82590",
+    "rank": "Leading Fireman",
+    "name": "Dharmendra Roy",
+    "unitAddress": "Coast Guard Station, Chennai",
+    "contact": 8048443250,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267b1",
+    "department": "LRDE , DRDO",
+    "personnelNumber": "LRDE-92269",
+    "rank": "Havildar",
+    "name": "Abhishek Rastogi",
+    "unitAddress": "LRDE, DRDO Complex, Bengaluru",
+    "contact": 8495941570,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267b2",
+    "department": "Drona",
+    "personnelNumber": "DR-67190",
+    "rank": "Wing Commander",
+    "name": "Praveen Sharma",
+    "unitAddress": "DRONA Academy, Gurugram",
+    "contact": 7802555680,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267b3",
+    "department": "Munitions India Limited",
+    "personnelNumber": "MIL-38286",
+    "rank": "Sub-Officer",
+    "name": "Abhishek Das",
+    "unitAddress": "Munitions India Limited, Bhandara",
+    "contact": 8505106126,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267b4",
+    "department": "Munitions India Limited",
+    "personnelNumber": "MIL-62834",
+    "rank": "Captain",
+    "name": "Mukesh Das",
+    "unitAddress": "Munitions India Limited, Pune",
+    "contact": 9046841651,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267b5",
+    "department": "Drona",
+    "personnelNumber": "DR-79305",
+    "rank": "Station Officer",
+    "name": "Varun Chauhan",
+    "unitAddress": "DRONA Academy, Gurugram",
+    "contact": 7807885399,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267b6",
+    "department": "Air Force",
+    "personnelNumber": "AF-40428",
+    "rank": "Wing Commander",
+    "name": "Saurabh Kapoor",
+    "unitAddress": "Air Force Academy, Dundigal, Hyderabad",
+    "contact": 7769856841,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267b7",
+    "department": "Navy",
+    "personnelNumber": "N-35848",
+    "rank": "Havildar",
+    "name": "Sandeep Joshi",
+    "unitAddress": "INS Hansa, Goa",
+    "contact": 7859954639,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267b8",
+    "department": "Munitions India Limited",
+    "personnelNumber": "MIL-26149",
+    "rank": "Naib Subedar",
+    "name": "Ajay Pandey",
+    "unitAddress": "Munitions India Limited, Pune",
+    "contact": 8655086018,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267b9",
+    "department": "Munitions India Limited",
+    "personnelNumber": "MIL-67164",
+    "rank": "Squadron Leader",
+    "name": "Pankaj Kapoor",
+    "unitAddress": "Munitions India Limited, Nalanda",
+    "contact": 9787906488,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267ba",
+    "department": "DMRE , DRDO",
+    "personnelNumber": "DMRE-98042",
+    "rank": "Subedar",
+    "name": "Hemant Reddy",
+    "unitAddress": "DMRE, DRDO Complex, Pune",
+    "contact": 8781361894,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267bb",
+    "department": "Army",
+    "personnelNumber": "IC-83087",
+    "rank": "Lieutenant Commander",
+    "name": "Dharmendra Reddy",
+    "unitAddress": "14 Corps Signal Regiment, Leh",
+    "contact": 9597078155,
+    "__v": 0
+  },
+  {
+    "_id": "6ab821494d921face7a267bc",
+    "department": "Munitions India Limited",
+    "personnelNumber": "MIL-53366",
+    "rank": "Havildar",
+    "name": "Sandeep Choudhary",
+    "unitAddress": "Munitions India Limited, Bhandara",
+    "contact": 9841275355,
+    "__v": 0
+  },
+  {
+    "_id": "6ab8e66fa92fa2ac839161bf",
+    "department": "IRD , DRDO",
+    "personnelNumber": "PN-1232121",
+    "rank": "Senior Officer",
+    "name": "Amit Kumar",
+    "unitAddress": "IRD-X4/37",
+    "contact": 8765322154,
+    "__v": 0
+  }
+]

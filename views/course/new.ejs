@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Course | SDC Pilkhuwa</title>
+    <link rel="stylesheet" href="/css/course/new.css" />
+    <style>
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="top-bar"></div>
+
+    <header>
+      <div class="brand">
+        <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+        <div class="brand-text">
+          <h1>SDC Pilkhuwa</h1>
+          <h2>Training Record Management System</h2>
+        </div>
+      </div>
+
+      <div class="organization">
+        <strong>Centre for Fire, Explosive and Environment Safety</strong>
+        <br />
+        Defence Research and Development Organisation
+        <br />
+        Ministry of Defence, Government of India
+      </div>
+    </header>
+
+    <main>
+      <section class="page-header">
+        <div class="page-header-content">
+          <div class="page-label">Training Records · Administration</div>
+          <h1>Add New Course</h1>
+          <p>Enter the details below to create a new training course record.</p>
+        </div>
+      </section>
+
+      <section class="form-card">
+        <div class="form-card-header">
+          <h2>Course Information</h2>
+          <p>All fields are required</p>
+        </div>
+
+        <form action="/course" method="post" id="courseForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="year">Training Year</label>
+              <input
+                type="number"
+                name="year"
+                id="year"
+                placeholder="e.g. 2026"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="courseNumber">Course Number</label>
+              <input
+                type="number"
+                name="courseNumber"
+                id="courseNumber"
+                placeholder="e.g. 170"
+                required
+              />
+            </div>
+
+            <div class="form-group full-width">
+              <label for="courseName">Course Name</label>
+              <select name="courseName" id="courseName" required>
+                <option value="">Select Course Name</option>
+                <option value="General Course in Fire Fighting">
+                  General Course in Fire Fighting
+                </option>
+                <option value="Senior Fire Supervisor Course">
+                  Senior Fire Supervisor Course
+                </option>
+                <option
+                  value="General Course in Air Crash Rescue & Fire Fighting"
+                >
+                  General Course in Air Crash Rescue & Fire Fighting
+                </option>
+                <option value="Basic Course in Elementary Fire Fighting">
+                  Basic Course in Elementary Fire Fighting
+                </option>
+                <option
+                  value="General Fire Prevention and Fire Fighting Course : Officers"
+                >
+                  General Fire Prevention and Fire Fighting Course : Officers
+                </option>
+                <option
+                  value="Mandatory Training Course in Security & fire Fighting for DRDO Civilian Security Cadre Posts (Grp A or B)"
+                >
+                  Mandatory Training Course in Security & fire Fighting for DRDO
+                  Civilian Security Cadre Posts (Grp A or B)
+                </option>
+                <option
+                  value="Elementary Fire Prevention and Fire Safety Course : Officers (Grp A Gazetted / Commisioned / Equivalent PSU/Paramilitary)"
+                >
+                  Elementary Fire Prevention and Fire Safety Course : Officers
+                  (Grp A Gazetted / Commisioned / Equivalent PSU/Paramilitary)
+                </option>
+                <option
+                  value="Elementary Fire Prevention and Fire Safety Course : Officers (Upto Grp B Officials)"
+                >
+                  Elementary Fire Prevention and Fire Safety Course : Officers
+                  (Upto Grp B Officials)
+                </option>
+                <option
+                  value="Advnaced Fire Prevention and Fire Safety Course : Officers (Grp A Gazetted / Commisioned / Equivalent PSU/Paramilitary)"
+                >
+                  Advnaced Fire Prevention and Fire Safety Course : Officers
+                  (Grp A Gazetted / Commisioned / Equivalent PSU/Paramilitary)
+                </option>
+                <option
+                  value="Advanced Fire Prevention and Fire Safety Course: (Upto Grp B Officials)"
+                >
+                  Advanced Fire Prevention and Fire Safety Course: (Upto Grp B
+                  Officials)
+                </option>
+                <option value="Special Workshop on safety awareness">
+                  Special Workshop on safety awareness
+                </option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+
+            <!-- "Others" ke liye input -->
+            <div class="form-group full-width hidden" id="otherCourseNameDiv">
+              <label for="otherCourseName">Enter Custom Course Name</label>
+              <input
+                type="text"
+                name="otherCourseName"
+                id="otherCourseName"
+                placeholder="Enter new course name"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="startDate">Start Date</label>
+              <input type="date" name="startDate" id="startDate" required />
+            </div>
+
+            <div class="form-group">
+              <label for="endDate">End Date</label>
+              <input type="date" name="endDate" id="endDate" required />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Add Course</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+      <br />
+      Training Record Management System
+    </footer>
+
+    <script>
+      const courseNameSelect = document.getElementById("courseName");
+      const otherCourseNameDiv = document.getElementById("otherCourseNameDiv");
+      const otherCourseNameInput = document.getElementById("otherCourseName");
+      const yearInput = document.getElementById("year");
+      const startDateInput = document.getElementById("startDate");
+      const endDateInput = document.getElementById("endDate");
+
+      // Others logic
+      courseNameSelect.addEventListener("change", function () {
+        if (this.value === "Others") {
+          otherCourseNameDiv.classList.remove("hidden");
+          otherCourseNameInput.required = true;
+        } else {
+          otherCourseNameDiv.classList.add("hidden");
+          otherCourseNameInput.required = false;
+          otherCourseNameInput.value = "";
+        }
+      });
+
+      // Year ke basis par Start Date ki limit
+      yearInput.addEventListener("input", function () {
+        const year = this.value;
+        if (year && year.length === 4) {
+          startDateInput.min = `${year}-01-01`;
+          startDateInput.max = `${year}-12-31`;
+
+          // Agar pehle se koi date select hai jo range se bahar hai, toh clear kar do
+          if (startDateInput.value) {
+            const selectedYear = new Date(startDateInput.value).getFullYear();
+            if (selectedYear != year) {
+              startDateInput.value = "";
+              endDateInput.value = "";
+            }
+          }
+        }
+      });
+
+      // End Date min limit
+      startDateInput.addEventListener("change", function () {
+        endDateInput.min = this.value;
+        if (endDateInput.value && endDateInput.value <= this.value) {
+          endDateInput.value = "";
+        }
+      });
+    </script>
+  </body>
+</html>

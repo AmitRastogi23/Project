@@ -1,0 +1,393 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --navy: #123a63;
+    --dark-navy: #0c2945;
+    --blue: #1c527f;
+    --background: #eef2f5;
+    --border: #ccd6df;
+    --text: #1f2933;
+    --muted: #64717c;
+    --gold: #c69a3a;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+}
+
+.top-bar {
+    height: 6px;
+    background: var(--navy);
+}
+
+header {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.brand img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+}
+
+.brand-text {
+    border-left: 1px solid #d8dee4;
+    padding-left: 18px;
+}
+
+.brand-text h1 {
+    font-size: 25px;
+    color: var(--navy);
+    font-weight: 700;
+}
+
+.brand-text h2 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #56636e;
+    margin-top: 5px;
+}
+
+.organization {
+    text-align: right;
+    color: #596671;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.organization strong {
+    color: var(--navy);
+    font-size: 14px;
+}
+
+main {
+    width: 90%;
+    max-width: 950px;
+    margin: 42px auto 60px;
+    flex: 1;
+}
+
+.page-header {
+    background: linear-gradient(120deg, var(--dark-navy), var(--blue));
+    color: white;
+    padding: 34px 42px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 22px rgba(18, 58, 99, 0.16);
+}
+
+.page-label {
+    color: #a9cce6;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    margin-bottom: 10px;
+}
+
+.page-header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: #d1dce5;
+    font-size: 15px;
+}
+
+.form-card {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(12, 41, 69, 0.07);
+}
+
+.form-header {
+    background: var(--navy);
+    color: white;
+    padding: 18px 28px;
+}
+
+.form-header h2 {
+    font-size: 20px;
+}
+
+form {
+    padding: 30px;
+}
+
+.form-section {
+    margin-bottom: 28px;
+}
+
+.section-title {
+    color: var(--navy);
+    font-size: 17px;
+    font-weight: 700;
+    border-left: 4px solid var(--gold);
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.form-group:last-child {
+    margin-bottom: 0;
+}
+
+label {
+    width: 230px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+input,
+select {
+    flex: 1;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid #bfc9d2;
+    border-radius: 5px;
+    background: #ffffff;
+    color: #27313a;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(18, 58, 99, 0.1);
+}
+
+.course-info {
+    flex: 1;
+    background: #f1f5f8;
+    border: 1px solid #d7e0e7;
+    border-left: 4px solid var(--navy);
+    border-radius: 5px;
+    padding: 13px 15px;
+    color: var(--navy);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.radio-group {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    width: auto;
+    font-weight: 500;
+    color: #4b5563;
+    cursor: pointer;
+}
+
+.radio-option input {
+    flex: none;
+    width: auto;
+    accent-color: var(--navy);
+}
+
+.submit-area {
+    border-top: 1px solid #e1e6ea;
+    margin-top: 30px;
+    padding-top: 25px;
+    text-align: right;
+}
+
+button {
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+button:hover {
+    background: var(--dark-navy);
+}
+
+footer {
+    background: var(--dark-navy);
+    color: #b9c7d3;
+    text-align: center;
+    padding: 18px 10px;
+    font-size: 12px;
+    line-height: 1.7;
+    border-top: 4px solid var(--gold);
+}
+
+footer strong {
+    color: white;
+    font-size: 13px;
+}
+
+@media (max-width: 900px) {
+    header {
+        padding: 16px 4%;
+    }
+
+    .organization {
+        display: none;
+    }
+
+    main {
+        width: 92%;
+        margin: 30px auto 45px;
+    }
+}
+
+@media (max-width: 650px) {
+    .brand img {
+        width: 58px;
+        height: 58px;
+    }
+
+    .brand-text h1 {
+        font-size: 18px;
+    }
+
+    .brand-text h2 {
+        font-size: 12px;
+    }
+
+    .page-header {
+        padding: 28px 24px;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    form {
+        padding: 22px;
+    }
+
+    .form-group {
+        display: block;
+    }
+
+    label {
+        display: block;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    input,
+    select,
+    .course-info,
+    .radio-group {
+        width: 100%;
+    }
+
+    .radio-group {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .submit-area {
+        text-align: center;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+
+
+.other-dept-group {
+    /* Smooth reveal animation */
+    animation: fadeSlideIn 0.25s ease;
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.other-dept-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.other-dept-wrapper input {
+    flex: none;
+    width: 100%;
+    border-left: 4px solid var(--gold);
+    background: #fffdf7;
+    font-weight: 500;
+}
+
+.other-dept-wrapper input:focus {
+    background: #ffffff;
+    border-color: var(--navy);
+    border-left-color: var(--gold);
+}
+
+.other-dept-hint {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    padding-left: 2px;
+}
+
+/* Hidden state (JS toggle karega) */
+.other-dept-group.hidden {
+    display: none;
+}
+
+/* Mobile tweak */
+@media (max-width: 650px) {
+    .other-dept-wrapper {
+        width: 100%;
+    }
+}

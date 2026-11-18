@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Details | SDC Pilkhuwa</title>
+    <script src="/pdfjs/pdf.min.js"></script>
+    <link rel="stylesheet" href="/css/course/show.css" />
+  </head>
+
+  <body>
+    <div class="top-bar"></div>
+
+    <header>
+      <div class="brand">
+        <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+        <div class="brand-text">
+          <h1>SDC Pilkhuwa</h1>
+          <h2>Training Record Management System</h2>
+        </div>
+      </div>
+      <div class="organization">
+        <strong>Centre for Fire, Explosive and Environment Safety</strong>
+        <br />
+        Defence Research and Development Organisation
+        <br />
+        Ministry of Defence, Government of India
+      </div>
+    </header>
+
+    <main>
+      <section class="page-header">
+        <div class="page-label">Training Records · Course Information</div>
+        <h1>Course Details</h1>
+        <p>View complete information and manage records associated with this course.</p>
+      </section>
+
+      <section class="details-card">
+        <div class="details-header">
+          <h2>Course Information</h2>
+          <div class="header-actions">
+            <button onclick="openEditModal()" class="btn-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              Edit
+            </button>
+            <button onclick="openDeleteModal()" class="btn-icon danger">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              Delete
+            </button>
+          </div>
+        </div>
+
+        <div class="details">
+          <div class="row">
+            <div class="label">Course Number</div>
+            <div class="value"><%= courseDoc.courseNumber %></div>
+          </div>
+          <div class="row">
+            <div class="label">Course Name</div>
+            <div class="value"><%= courseDoc.courseName %></div>
+          </div>
+          <div class="row">
+            <div class="label">Start Date</div>
+            <div class="value"><%= courseDoc.startDate.toLocaleDateString("en-IN") %></div>
+          </div>
+          <div class="row">
+            <div class="label">End Date</div>
+            <div class="value"><%= courseDoc.endDate.toLocaleDateString("en-IN") %></div>
+          </div>
+          <div class="row">
+            <div class="label">Course Duration</div>
+            <div class="value"><%= courseDoc.courseDuration %> Weeks</div>
+          </div>
+
+          <div class="row">
+            <div class="label">Course Schedule</div>
+            <div class="value"><a href="/course/<%=courseDoc._id%>/schedule">View Course Schedule</a></div>
+          </div>
+          <div class="row">
+            <div class="label">Notices & ION</div>
+            <div class="value"><a href="/course/<%=courseDoc._id%>/notice">View Notices & ION</a></div>
+          </div>
+          <div class="row">
+            <div class="label">Honorarium</div>
+            <div class="value"><a href="/course/<%=courseDoc._id%>/honorarium">View & Download Honorariums</a></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <h2>Course Actions</h2>
+          <p>Access applicant records and generate course-related documents.</p>
+
+          <div class="action-grid">
+            <a href="/applicant/<%= courseDoc._id %>" class="view-btn"><span>View Nominal Roll</span><span>→</span></a>
+            <button onclick="openDetentionModal('<%= courseDoc._id %>')" class="view-btn"><span>View Detention Certificates</span><span>→</span></button>
+            <button onclick="openCompletionModal('<%= courseDoc._id %>')" class="view-btn"><span>View Course Completion Certificates</span><span>→</span></button>
+            <button onclick="openClearanceModal('<%= courseDoc._id %>')" class="view-btn"><span>View Course Clearance Certificates</span><span>→</span></button>
+            <a href="/applicant/<%= courseDoc._id %>/items" class="view-btn"><span>View Items Receiving List</span><span>→</span></a>
+            <a href="/applicant/<%= courseDoc._id %>/documents" class="view-btn"><span>View Documents Verification List</span><span>→</span></a>
+            <a href="/applicant/<%= courseDoc._id %>/attendance" class="view-btn"><span>View Attendance Sheet</span><span>→</span></a>
+            <a href="/applicant/<%= courseDoc._id %>/SOS" class="view-btn"><span>View Stuck of Service (SOS) Sheet</span><span>→</span></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+      <br />
+      Training Record Management System
+    </footer>
+
+    <!-- ===== EDIT MODAL ===== -->
+    <div id="editModal" class="modal-overlay">
+      <div class="modal-box edit-modal-box">
+        <div class="modal-header">
+          <h3>Edit Course Details</h3>
+          <button class="modal-close" onclick="closeEditModal()">&times;</button>
+        </div>
+        <div class="edit-body">
+          <div class="edit-note">
+            <strong>Note:</strong> Changing Year, Start Date, or End Date will reset the entire course information including schedule and enrollments.
+          </div>
+          <form id="editForm">
+            <input type="hidden" id="editCourseId" value="<%= courseDoc._id %>" />
+            <input type="hidden" id="editYearId" value="<%= courseDoc.year._id %>" />
+            
+            <div class="edit-form-group">
+              <label for="editYear">Training Year</label>
+              <input type="number" id="editYear" value="<%= courseDoc.year.year %>" required />
+            </div>
+
+            <div class="edit-form-group">
+              <label for="editCourseNumber">Course Number</label>
+              <input type="number" id="editCourseNumber" value="<%= courseDoc.courseNumber %>" required />
+            </div>
+
+            <div class="edit-form-group">
+              <label for="editCourseName">Course Name</label>
+              <select id="editCourseName" required>
+                <option value="">Select Course Name</option>
+                <option value="General Course in Fire Fighting" <%= courseDoc.courseName === "General Course in Fire Fighting" ? "selected" : "" %>>General Course in Fire Fighting</option>
+                <option value="Senior Fire Supervisor Course" <%= courseDoc.courseName === "Senior Fire Supervisor Course" ? "selected" : "" %>>Senior Fire Supervisor Course</option>
+                <option value="General Course in Air Crash Rescue & Fire Fighting" <%= courseDoc.courseName === "General Course in Air Crash Rescue & Fire Fighting" ? "selected" : "" %>>General Course in Air Crash Rescue & Fire Fighting</option>
+                <option value="Basic Course in Elementary Fire Fighting" <%= courseDoc.courseName === "Basic Course in Elementary Fire Fighting" ? "selected" : "" %>>Basic Course in Elementary Fire Fighting</option>
+                <option value="General Fire Prevention and Fire Fighting Course : Officers" <%= courseDoc.courseName === "General Fire Prevention and Fire Fighting Course : Officers" ? "selected" : "" %>>General Fire Prevention and Fire Fighting Course : Officers</option>
+                <option value="Mandatory Training Course in Security & fire Fighting for DRDO Civilian Security Cadre Posts (Grp A or B)" <%= courseDoc.courseName === "Mandatory Training Course in Security & fire Fighting for DRDO Civilian Security Cadre Posts (Grp A or B)" ? "selected" : "" %>>Mandatory Training Course in Security & fire Fighting for DRDO Civilian Security Cadre Posts (Grp A or B)</option>
+                <option value="Elementary Fire Prevention and Fire Safety Course : Officers (Grp A Gazetted / Commisioned / Equivalent PSU/Paramilitary)" <%= courseDoc.courseName === "Elementary Fire Prevention and Fire Safety Course : Officers (Grp A Gazetted / Commisioned / Equivalent PSU/Paramilitary)" ? "selected" : "" %>>Elementary Fire Prevention and Fire Safety Course : Officers (Grp A Gazetted / Commisioned / Equivalent PSU/Paramilitary)</option>
+                <option value="Elementary Fire Prevention and Fire Safety Course : Officers (Upto Grp B Officials)" <%= courseDoc.courseName === "Elementary Fire Prevention and Fire Safety Course : Officers (Upto Grp B Officials)" ? "selected" : "" %>>Elementary Fire Prevention and Fire Safety Course : Officers (Upto Grp B Officials)</option>
+                <option value="Advnaced Fire Prevention and Fire Safety Course : Officers (Grp A Gazetted / Commisioned / Equivalent PSU/Paramilitary)" <%= courseDoc.courseName === "Advnaced Fire Prevention and Fire Safety Course : Officers (Grp A Gazetted / Commisioned / Equivalent PSU/Paramilitary)" ? "selected" : "" %>>Advnaced Fire Prevention and Fire Safety Course : Officers (Grp A Gazetted / Commisioned / Equivalent PSU/Paramilitary)</option>
+                <option value="Advanced Fire Prevention and Fire Safety Course: (Upto Grp B Officials)" <%= courseDoc.courseName === "Advanced Fire Prevention and Fire Safety Course: (Upto Grp B Officials)" ? "selected" : "" %>>Advanced Fire Prevention and Fire Safety Course: (Upto Grp B Officials)</option>
+                <option value="Special Workshop on safety awareness" <%= courseDoc.courseName === "Special Workshop on safety awareness" ? "selected" : "" %>>Special Workshop on safety awareness</option>
+                <option value="Others" <%= courseDoc.courseName === "Others" ? "selected" : "" %>>Others</option>
+              </select>
+            </div>
+
+            <div class="edit-form-group" id="editOtherCourseNameDiv" style="display: none;">
+              <label for="editOtherCourseName">Custom Course Name</label>
+              <input type="text" id="editOtherCourseName" />
+            </div>
+
+            <div class="edit-form-group">
+              <label for="editStartDate">Start Date</label>
+              <input type="date" id="editStartDate" value="<%= courseDoc.startDate.toISOString().split('T')[0] %>" required />
+            </div>
+
+            <div class="edit-form-group">
+              <label for="editEndDate">End Date</label>
+              <input type="date" id="editEndDate" value="<%= courseDoc.endDate.toISOString().split('T')[0] %>" required />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="close-btn" onclick="closeEditModal()">Cancel</button>
+          <button class="download-btn" id="saveEditBtn" onclick="submitEditForm()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DELETE MODAL ===== -->
+    <div id="deleteModal" class="modal-overlay">
+      <div class="modal-box delete-modal-box">
+        <div class="modal-header delete-header">
+          <h3>Delete Course</h3>
+          <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+        </div>
+        <div class="delete-body">
+          Are you sure you want to delete this course?
+          <div class="delete-warning">
+            <strong>Warning:</strong> This will permanently delete the course, its schedule, and all related enrollments. This action cannot be undone.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="close-btn" onclick="closeDeleteModal()">Cancel</button>
+          <button class="download-btn btn-danger" id="confirmDeleteBtn" onclick="submitDelete()">Delete Permanently</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DETENTION MODAL ===== -->
+    <div id="detentionModal" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3>Detention Certificates - Preview</h3>
+          <button class="modal-close" onclick="closeDetentionModal()">&times;</button>
+        </div>
+        <div class="pdf-body" id="detentionModalBody">
+          <div class="loading-text">Loading PDF preview...</div>
+        </div>
+        <div class="modal-footer">
+          <button class="close-btn" onclick="closeDetentionModal()">Close</button>
+          <a href="" id="detentionPdfLink" class="download-btn" download>Export to PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== COMPLETION MODAL ===== -->
+    <div id="completionModal" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3>Course Completion Certificates - Preview</h3>
+          <button class="modal-close" onclick="closeCompletionModal()">&times;</button>
+        </div>
+        <div class="pdf-body" id="completionModalBody">
+          <div class="loading-text">Loading PDF preview...</div>
+        </div>
+        <div class="modal-footer">
+          <button class="close-btn" onclick="closeCompletionModal()">Close</button>
+          <a href="" id="completionPdfLink" class="download-btn" download>Export to PDF</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CLEARANCE MODAL ===== -->
+    <div id="clearanceModal" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3>Course Clearance Certificates - Preview</h3>
+          <button class="modal-close" onclick="closeClearanceModal()">&times;</button>
+        </div>
+        <div class="pdf-body" id="clearanceModalBody">
+          <div class="loading-text">Loading PDF preview...</div>
+        </div>
+        <div class="modal-footer">
+          <button class="close-btn" onclick="closeClearanceModal()">Close</button>
+          <a href="" id="clearancePdfLink" class="download-btn" download>Export to PDF</a>
+          <a href="/applicant/<%= courseDoc._id %>/clearance/excel" class="download-btn" style="background:#197344">Export to Excel</a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      window.courseData = {
+        _id: "<%= courseDoc._id %>",
+        yearId: "<%= courseDoc.year._id %>",
+        year: "<%= courseDoc.year.year %>",
+        courseNumber: "<%= courseDoc.courseNumber %>",
+        courseName: "<%= courseDoc.courseName %>",
+        startDate: "<%= courseDoc.startDate.toISOString().split('T')[0] %>",
+        endDate: "<%= courseDoc.endDate.toISOString().split('T')[0] %>"
+      };
+    </script>
+    <script src="/js/course/show.js"></script>
+  </body>
+</html>

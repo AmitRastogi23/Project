@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training Year <%= year.year %> | SDC Pilkhuwa</title>
+
+  <link rel="stylesheet" href="/css/year/show.css" />
+  <link rel="stylesheet" href="/fullcalendar/skeleton.css" />
+  <link rel="stylesheet" href="/fullcalendar/themes/monarch/theme.css" />
+  <link rel="stylesheet" href="/fullcalendar/themes/monarch/palettes/purple.css" />
+</head>
+
+<body>
+
+  <div class="top-bar"></div>
+
+  <!-- ================= HEADER (CONSISTENT DESIGN) ================= -->
+  <header>
+    <div class="brand">
+      <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+      <div class="brand-text">
+        <h1>SDC Pilkhuwa</h1>
+        <h2>Training Record Management System</h2>
+      </div>
+    </div>
+
+    <div class="organization">
+      <strong>Centre for Fire, Explosive and Environment Safety</strong>
+      <br />
+      Defence Research and Development Organisation
+      <br />
+      Ministry of Defence, Government of India
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= PAGE TITLE / HERO ================= -->
+    <section class="page-header">
+      <div class="page-header-content">
+        <div class="page-label">Training Records · <%= year.year %> Archive</div>
+        <h1>Training Year <%= year.year %></h1>
+        <p>Manage gazetted holidays and explore training courses for <%= year.year %>.</p>
+      </div>
+    </section>
+
+    <!-- ================= HOLIDAY SECTION ================= -->
+    <section class="content-section holiday-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Holiday Calendar · <%= year.year %></h2>
+          <p class="section-subtitle">Gazetted holidays and training calendar for <%= year.year %></p>
+        </div>
+
+        <div class="header-actions">
+          <button type="button" class="btn btn-secondary" id="viewHolidaysBtn">
+            <span>📋</span> View All Holidays
+          </button>
+          <button type="button" class="btn btn-primary" id="addHolidayBtn">
+            <span>+</span> Add Holiday
+          </button>
+        </div>
+      </div>
+
+      <div class="holiday-layout">
+        <!-- ================= LEFT PART: HOLIDAY LIST ================= -->
+        <div class="holiday-list-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3>Holidays List</h3>
+              <span class="badge"><%= year.holidays ? year.holidays.length : 0 %> Holidays</span>
+            </div>
+          </div>
+
+          <div class="holiday-list-body">
+            <% if (!year.holidays || year.holidays.length === 0) { %>
+              <div class="empty-state">
+                <div class="empty-icon">📅</div>
+                <h4>No Holidays Added</h4>
+                <p>No gazetted holidays have been scheduled for <%= year.year %> yet.</p>
+                <button type="button" class="btn btn-sm btn-primary" onclick="document.getElementById('addHolidayBtn').click()">
+                  + Add First Holiday
+                </button>
+              </div>
+            <% } else { %>
+              <div class="holiday-items">
+                <% year.holidays.forEach((holiday) => { %>
+                  <div class="holiday-item">
+                    <div class="holiday-date-badge">
+                      <span class="badge-day"><%= new Date(holiday.date).getDate() %></span>
+                      <span class="badge-month"><%= new Date(holiday.date).toLocaleDateString("en-IN", { month: "short" }) %></span>
+                    </div>
+
+                    <div class="holiday-details">
+                      <h4 class="holiday-occasion"><%= holiday.Occasion %></h4>
+                      <p class="holiday-weekday">
+                        <%= new Date(holiday.date).toLocaleDateString("en-IN", {
+                          weekday: "long",
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric"
+                        }) %>
+                      </p>
+                    </div>
+
+                    <div class="holiday-actions">
+                      <button
+                        type="button"
+                        class="action-btn edit-btn edit-holiday-btn"
+                        data-id="<%= holiday._id %>"
+                        data-date="<%= new Date(holiday.date).toISOString().split('T')[0] %>"
+                        data-occasion="<%= holiday.Occasion %>"
+                      >
+                        Edit
+                      </button>
+
+                      <form
+                        action="/year/<%= year._id %>/holidays/<%= holiday._id %>?_method=DELETE"
+                        method="POST"
+                        onsubmit="return confirm('Are you sure you want to delete this holiday?');"
+                      >
+                        <button type="submit" class="action-btn delete-btn">
+                          Delete
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                <% }) %>
+              </div>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- ================= RIGHT PART: SQUARE CALENDAR ================= -->
+        <div class="calendar-card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h3>Monthly Calendar</h3>
+              <span class="calendar-year-badge"><%= year.year %></span>
+            </div>
+          </div>
+
+          <div class="calendar-wrapper">
+            <div
+              id="holidayCalendar"
+              data-holidays='<%- JSON.stringify(year.holidays || []) %>'
+            ></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= COURSES SECTION (FOLDER DESIGN) ================= -->
+    <section class="content-section courses-section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Available Courses</h2>
+          <p class="section-subtitle">Select a course folder to open its training records and nominal roll.</p>
+        </div>
+
+        <span class="badge course-count-badge"><%= courses.length %> Courses</span>
+      </div>
+
+      <% if (!courses || courses.length === 0) { %>
+        <div class="empty-state" style="background: white; border-radius: 14px; border: 1px solid var(--border); padding: 48px 20px;">
+          <div class="empty-icon">📂</div>
+          <h4>No Courses Available</h4>
+          <p>No courses have been added to this training year yet.</p>
+        </div>
+      <% } else { %>
+        <div class="course-grid">
+          <% courses.forEach((course) => { %>
+            <a
+              href="/course/details?courseNumber=<%= course.courseNumber %>&courseName=<%= encodeURIComponent(course.courseName) %>"
+              class="course-folder-card"
+            >
+              <div class="folder-graphic">
+                <span class="folder-emoji">📁</span>
+              </div>
+
+              <div class="folder-body">
+                <div class="course-num-tag">Course <%= course.courseNumber %></div>
+                <h3 class="course-title"><%= course.courseName %></h3>
+              </div>
+
+              <div class="folder-footer">
+                <span class="folder-btn-text">Open Folder</span>
+                <span class="folder-arrow">→</span>
+              </div>
+            </a>
+          <% }) %>
+        </div>
+      <% } %>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER (CONSISTENT DESIGN) ================= -->
+  <footer>
+    <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+    <br />
+    Training Record Management System
+  </footer>
+
+  <!-- ================= VIEW ALL HOLIDAYS MODAL ================= -->
+  <div class="holiday-modal" id="viewHolidaysModal">
+    <div class="holiday-modal-content" style="max-width: 680px;">
+      <div class="modal-header">
+        <div>
+          <span class="modal-label">Gazetted Holidays</span>
+          <h2>All Holidays - <%= year.year %></h2>
+        </div>
+        <button type="button" id="closeViewHolidaysModal" class="modal-close-btn">&times;</button>
+      </div>
+
+      <div class="holiday-form" style="max-height: 60vh; overflow-y: auto;">
+        <% if (!year.holidays || year.holidays.length === 0) { %>
+          <div style="text-align: center; padding: 32px 0;">
+            <div style="font-size: 48px; margin-bottom: 12px;">📅</div>
+            <h4 style="color: var(--muted); font-size: 16px;">No holidays found for this year</h4>
+          </div>
+        <% } else { %>
+          <% 
+            const groupedHolidays = {};
+            const monthNames = [
+              "January", "February", "March", "April", "May", "June", 
+              "July", "August", "September", "October", "November", "December"
+            ];
+            
+            const sortedHolidays = [...year.holidays].sort((a, b) => {
+              return new Date(a.date) - new Date(b.date);
+            });
+            
+            sortedHolidays.forEach((holiday) => {
+              const date = new Date(holiday.date);
+              const monthKey = date.getMonth();
+              if (!groupedHolidays[monthKey]) {
+                groupedHolidays[monthKey] = [];
+              }
+              groupedHolidays[monthKey].push(holiday);
+            });
+          %>
+
+          <% for (let month = 0; month < 12; month++) { %>
+            <% if (groupedHolidays[month] && groupedHolidays[month].length > 0) { %>
+              <div class="modal-holiday-month-group">
+                <h3 class="modal-month-title"><%= monthNames[month] %></h3>
+                <div>
+                  <% groupedHolidays[month].forEach((holiday) => { %>
+                    <div class="modal-holiday-row">
+                      <div>
+                        <span class="modal-holiday-date">
+                          <%= new Date(holiday.date).toLocaleDateString("en-IN", { day: "numeric", month: "short" }) %>
+                        </span>
+                        <span class="modal-holiday-occasion"><%= holiday.Occasion %></span>
+                      </div>
+                      <div class="modal-holiday-day">
+                        <%= new Date(holiday.date).toLocaleDateString("en-IN", { weekday: "long" }) %>
+                      </div>
+                    </div>
+                  <% }) %>
+                </div>
+              </div>
+            <% } %>
+          <% } %>
+        <% } %>
+      </div>
+
+      <div class="modal-actions" style="padding: 0 24px 20px;">
+        <button type="button" class="btn btn-secondary" id="closeViewHolidaysBtn">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ADD HOLIDAY MODAL ================= -->
+  <div class="holiday-modal" id="holidayModal">
+    <div class="holiday-modal-content">
+      <div class="modal-header">
+        <div>
+          <span class="modal-label">New Entry</span>
+          <h2>Add Holiday</h2>
+        </div>
+        <button type="button" id="closeHolidayModal" class="modal-close-btn">&times;</button>
+      </div>
+
+      <div class="holiday-form">
+        <div class="form-group">
+          <label for="holidayDate">Date</label>
+          <input 
+            type="date" 
+            id="holidayDate" 
+            name="date"
+            min="<%= year.year %>-01-01"
+            max="<%= year.year %>-12-31"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="holidayOccasion">Occasion</label>
+          <input type="text" id="holidayOccasion" name="occasion" placeholder="e.g. Republic Day" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancelHolidayBtn">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveHolidayBtn">Add Holiday</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= EDIT HOLIDAY MODAL ================= -->
+  <div class="holiday-modal" id="editHolidayModal">
+    <div class="holiday-modal-content">
+      <div class="modal-header">
+        <div>
+          <span class="modal-label">Update Entry</span>
+          <h2>Edit Holiday</h2>
+        </div>
+        <button type="button" id="closeEditHolidayModal" class="modal-close-btn">&times;</button>
+      </div>
+
+      <div class="holiday-form">
+        <div class="form-group">
+          <label for="editHolidayDate">Date</label>
+          <input 
+            type="date" 
+            id="editHolidayDate"
+            min="<%= year.year %>-01-01"
+            max="<%= year.year %>-12-31"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="editHolidayOccasion">Occasion</label>
+          <input type="text" id="editHolidayOccasion" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="cancelEditHolidayBtn">Cancel</button>
+          <button type="button" class="btn btn-primary" id="updateHolidayBtn">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/fullcalendar/all/global.js"></script>
+  <script src="/fullcalendar/themes/monarch/global.js"></script>
+
+  <script>
+    window.yearVal = "<%= year.year %>";
+    window.yearId = "<%= year._id %>";
+  </script>
+
+<script src="/js/year/show.js"></script>
+</body>
+
+</html>

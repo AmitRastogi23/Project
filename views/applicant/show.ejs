@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Applicants | SDC Pilkhuwa</title>
+    <link rel="stylesheet" href="/css/applicant/show.css" />
+  </head>
+
+  <body>
+    <div class="top-bar"></div>
+
+    <header>
+      <div class="brand">
+        <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+
+        <div class="brand-text">
+          <h1>SDC Pilkhuwa</h1>
+          <h2>Training Record Management System</h2>
+        </div>
+      </div>
+
+      <div class="organization">
+        <strong>Centre for Fire, Explosive and Environment Safety</strong>
+        <br />
+        Defence Research and Development Organisation
+        <br />
+        Ministry of Defence, Government of India
+      </div>
+    </header>
+
+    <main>
+      <section class="page-header">
+        <div class="page-label">Training Records · Applicant Management</div>
+
+        <h1>Applicants Details</h1>
+
+        <p>
+          View and manage applicants enrolled in the selected training course.
+        </p>
+      </section>
+
+      <section class="record-card">
+        <div class="record-header">
+          <h2>Applicant Records</h2>
+
+          <span> Select a department to view records </span>
+        </div>
+
+        <div class="filter-box">
+          <div class="filter-group">
+            <label for="department"> Department / Organisation </label>
+
+            <select id="department">
+              <option value="" disabled selected>Loading...</option>
+            </select>
+          </div>
+
+          <button id="viewApplicants" class="view-btn">View Applicants</button>
+        </div>
+
+        <div id="applicantContainer"></div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+      <br />
+      Training Record Management System
+    </footer>
+
+    <!-- ================= DELETE CONFIRMATION MODAL ================= -->
+    <div class="modal-overlay" id="deleteModal">
+      <div class="modal-box">
+        <div class="modal-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+            />
+            <line x1="12" y1="9" x2="12" y2="13" />
+            <line x1="12" y1="17" x2="12.01" y2="17" />
+          </svg>
+        </div>
+
+        <h3 class="modal-title">Delete Enrollment?</h3>
+
+        <p class="modal-text">
+          Are you sure you want to delete the enrollment of
+          <strong id="modalApplicantName">this applicant</strong>?
+          <br />
+          <span class="modal-warning">This action cannot be undone.</span>
+        </p>
+
+        <div class="modal-actions">
+          <button class="modal-btn cancel" id="cancelDelete">Cancel</button>
+          <button class="modal-btn confirm" id="confirmDelete">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= EDIT ENROLLMENT MODAL ================= -->
+    <div class="modal-overlay" id="editModal">
+      <div class="modal-box edit-modal-box">
+        <div class="modal-header">
+          <h3>Edit Enrollment</h3>
+          <button class="modal-close" id="closeEditModal" title="Close">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <form id="editEnrollmentForm">
+          <!-- ===== READ-ONLY SECTION ===== -->
+          <div class="edit-section">
+            <h4 class="edit-section-title">Applicant Details (Read-only)</h4>
+
+            <div class="edit-row">
+              <label>Personnel No.</label>
+              <input type="text" id="editPersonnelNumber" readonly />
+            </div>
+
+            <div class="edit-row">
+              <label>Rank</label>
+              <input type="text" id="editRank" readonly />
+            </div>
+
+            <div class="edit-row">
+              <label>Name</label>
+              <input type="text" id="editName" readonly />
+            </div>
+
+            <div class="edit-row">
+              <label>Unit Address</label>
+              <input type="text" id="editUnitAddress" readonly />
+            </div>
+
+            <div class="edit-row">
+              <label>Contact</label>
+              <input type="text" id="editContact" readonly />
+            </div>
+          </div>
+
+          <!-- ===== EDITABLE SECTION ===== -->
+          <div class="edit-section">
+            <h4 class="edit-section-title editable">
+              Enrollment Details (Editable)
+            </h4>
+
+            <div class="edit-row">
+              <label for="editReportingDate">Reporting Date</label>
+              <input
+                type="date"
+                id="editReportingDate"
+                name="reportingDate"
+                required
+              />
+            </div>
+
+            <div class="edit-row">
+              <label>Noon Time</label>
+              <div class="radio-group">
+                <label class="radio-option">
+                  <input type="radio" name="noonTime" value="ForeNoon" />
+                  Forenoon
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="noonTime" value="AfterNoon" />
+                  Afternoon
+                </label>
+              </div>
+            </div>
+
+            <div class="edit-row">
+              <label for="editMONumber">MO Number</label>
+              <input type="text" id="editMONumber" name="MONumber" required />
+            </div>
+
+            <div class="edit-row">
+              <label for="editMODate">MO Date</label>
+              <input type="date" id="editMODate" name="MODate" required />
+            </div>
+          </div>
+
+          <!-- ===== ACTIONS ===== -->
+          <div class="modal-actions">
+            <button type="button" class="modal-btn cancel" id="cancelEdit">
+              Cancel
+            </button>
+            <button type="submit" class="modal-btn save" id="saveEdit">
+              Save Changes
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      window.courseId = "<%= id %>";
+    </script>
+    <script src="/js/applicant/show.js"></script>
+  </body>
+</html>

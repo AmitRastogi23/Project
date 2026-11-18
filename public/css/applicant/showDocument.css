@@ -1,0 +1,428 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+}
+
+:root {
+    --navy: #123a63;
+    --dark-navy: #0c2945;
+    --blue: #1c527f;
+    --background: #eef2f5;
+    --border: #ccd6df;
+    --text: #1f2933;
+    --muted: #64717c;
+    --gold: #c69a3a;
+    --green: #197344;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+}
+
+.top-bar {
+    height: 6px;
+    background: var(--navy);
+}
+
+header {
+    background: #ffffff;
+    border-bottom: 1px solid var(--border);
+    padding: 16px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.brand img {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+}
+
+.brand-text {
+    border-left: 1px solid #d8dee4;
+    padding-left: 18px;
+}
+
+.brand-text h1 {
+    font-size: 25px;
+    color: var(--navy);
+}
+
+.brand-text h2 {
+    font-size: 15px;
+    font-weight: 500;
+    color: #56636e;
+    margin-top: 5px;
+}
+
+.organization {
+    text-align: right;
+    color: #596671;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.organization strong {
+    color: var(--navy);
+    font-size: 14px;
+}
+
+main {
+    width: 94%;
+    max-width: 1400px;
+    margin: 42px auto 60px;
+    flex: 1;
+}
+
+.page-header {
+    background: linear-gradient(120deg,
+            var(--dark-navy),
+            var(--blue));
+    color: white;
+    padding: 34px 42px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 22px rgba(18, 58, 99, 0.16);
+}
+
+.page-label {
+    color: #a9cce6;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    margin-bottom: 10px;
+}
+
+.page-header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: #d1dce5;
+    font-size: 15px;
+}
+
+.table-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(12, 41, 69, 0.07);
+    overflow: hidden;
+}
+
+.table-header {
+    background: var(--navy);
+    color: white;
+    padding: 18px 28px;
+}
+
+.table-header h2 {
+    font-size: 20px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 4px;
+}
+
+table {
+    width: 100%;
+    min-width: 1000px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th {
+    background: #f1f4f7;
+    color: var(--navy);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 10px 6px;
+    border-bottom: 2px solid var(--border);
+    text-align: center;
+    line-height: 1.2;
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+td {
+    padding: 12px 6px;
+    border-bottom: 1px solid #e3e8ec;
+    color: #333e48;
+    font-size: 13px;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+tbody tr:hover {
+    background: #f8fafb;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+td.name {
+    text-align: left;
+    font-weight: 600;
+    color: var(--navy);
+}
+
+/* ===== COLUMN WIDTHS (10 columns) ===== */
+th:nth-child(1),
+td:nth-child(1) {
+    width: 40px;
+}
+
+/* S. No. */
+th:nth-child(2),
+td:nth-child(2) {
+    width: 100px;
+}
+
+/* Personnel No. */
+th:nth-child(3),
+td:nth-child(3) {
+    width: 70px;
+}
+
+/* Rank */
+th:nth-child(4),
+td:nth-child(4) {
+    width: 140px;
+}
+
+/* Name */
+th:nth-child(5),
+td:nth-child(5) {
+    width: 85px;
+}
+
+/* Movement Order */
+th:nth-child(6),
+td:nth-child(6) {
+    width: 100px;
+}
+
+/* 3 Yrs Residual */
+th:nth-child(7),
+td:nth-child(7) {
+    width: 85px;
+}
+
+/* Medical Certificate */
+th:nth-child(8),
+td:nth-child(8) {
+    width: 100px;
+}
+
+/* Qualification Documents */
+th:nth-child(9),
+td:nth-child(9) {
+    width: 100px;
+}
+
+/* Previous Course Certificate */
+th:nth-child(10),
+td:nth-child(10) {
+    width: 85px;
+}
+
+/* Passport Size Photo */
+
+.item-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #7a8792;
+    border-radius: 4px;
+    background: #ffffff;
+    cursor: pointer;
+    position: relative;
+    vertical-align: middle;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.item-checkbox:hover {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(18, 58, 99, 0.08);
+}
+
+.item-checkbox:checked {
+    background: var(--green);
+    border-color: var(--green);
+}
+
+.item-checkbox:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.item-checkbox:focus-visible {
+    outline: 3px solid rgba(18, 58, 99, 0.2);
+    outline-offset: 2px;
+}
+
+.empty {
+    text-align: center;
+    padding: 45px 20px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.save-section {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 28px;
+    background: #f4f7f9;
+    border-top: 1px solid #dfe5ea;
+    flex-wrap: wrap;
+}
+
+.save-btn {
+    border: none;
+    padding: 12px 24px;
+    background: var(--navy);
+    color: white;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.save-btn:hover {
+    background: var(--dark-navy);
+}
+
+.print-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--green);
+    color: white;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.print-btn:hover {
+    background: #125c35;
+}
+
+.excel-btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #1e7e34;
+    color: white;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.excel-btn:hover {
+    background: #14632a;
+}
+
+footer {
+    background: var(--dark-navy);
+    color: #b9c7d3;
+    text-align: center;
+    padding: 18px 10px;
+    font-size: 12px;
+    line-height: 1.7;
+    border-top: 4px solid var(--gold);
+}
+
+footer strong {
+    color: white;
+    font-size: 13px;
+}
+
+@media (max-width: 900px) {
+    header {
+        padding: 16px 4%;
+    }
+
+    .organization {
+        display: none;
+    }
+
+    main {
+        width: 96%;
+        margin: 30px auto 45px;
+    }
+}
+
+@media (max-width: 650px) {
+    .brand img {
+        width: 58px;
+        height: 58px;
+    }
+
+    .brand-text h1 {
+        font-size: 18px;
+    }
+
+    .brand-text h2 {
+        font-size: 12px;
+    }
+
+    .page-header {
+        padding: 28px 24px;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    .table-header {
+        padding: 16px 20px;
+    }
+
+    .save-section {
+        padding: 18px 20px;
+        flex-direction: column;
+    }
+
+    .save-btn,
+    .print-btn,
+    .excel-btn {
+        width: 100%;
+        text-align: center;
+    }
+}

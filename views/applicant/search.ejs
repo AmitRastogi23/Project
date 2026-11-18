@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Applicant | SDC Pilkhuwa</title>
+    <link rel="stylesheet" href="/css/applicant/search.css" />
+  </head>
+
+  <body>
+    <div class="top-bar"></div>
+
+    <header>
+      <div class="brand">
+        <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+
+        <div class="brand-text">
+          <h1>SDC Pilkhuwa</h1>
+          <h2>Training Record Management System</h2>
+        </div>
+      </div>
+
+      <div class="organization">
+        <strong>Centre for Fire, Explosive and Environment Safety</strong>
+        <br />
+        Defence Research and Development Organisation
+        <br />
+        Ministry of Defence, Government of India
+      </div>
+    </header>
+
+    <main>
+      <section class="page-header">
+        <div class="page-header-content">
+          <div class="page-label">Training Records · Search</div>
+          <h1>Search Applicant</h1>
+          <p>
+            Enter the applicant details to access the complete applicant record.
+          </p>
+        </div>
+      </section>
+
+      <section class="search-card">
+        <div class="search-card-header">
+          <h2>Applicant Search</h2>
+          <p>Enter both fields to locate the required record.</p>
+        </div>
+
+        <form id="applicantSearchForm" method="post">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="courseNumber">Applicant Personnel Number</label>
+              <input
+                type="text"
+                name="personnelNumber"
+                id="personnelNumber"
+                placeholder="e.g. PN-104532"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="courseName">Applicant Name</label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Enter the complete applicant name"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="note">
+            Enter the personnel number and applicant name exactly as recorded in
+            the training records.
+          </div>
+
+          <div class="form-actions">
+            <button type="submit">View Applicant Details</button>
+          </div>
+        </form>
+      </section>
+
+      <section
+        id="applicantResult"
+        class="result-card"
+        style="display: none"
+      ></section>
+
+      <!-- ================= EDIT APPLICANT MODAL ================= -->
+      <div class="modal-overlay" id="editApplicantModal">
+        <div class="modal-box edit-applicant-box">
+          <div class="modal-header">
+            <h3>Edit Applicant Details</h3>
+            <button class="modal-close" id="closeEditApplicant" title="Close">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+
+          <form id="editApplicantForm">
+            <div class="edit-section">
+              <h4 class="edit-section-title">Personal & Service Details</h4>
+
+              <div class="edit-row">
+                <label for="editDepartment">Department</label>
+                <input
+                  type="text"
+                  id="editDepartment"
+                  name="department"
+                  required
+                />
+              </div>
+
+              <div class="edit-row">
+                <label for="editPersonnelNumber">Personnel Number</label>
+                <input
+                  type="text"
+                  id="editPersonnelNumber"
+                  name="personnelNumber"
+                  required
+                />
+              </div>
+
+              <div class="edit-row">
+                <label for="editRank">Rank</label>
+                <input type="text" id="editRank" name="rank" required />
+              </div>
+
+              <div class="edit-row">
+                <label for="editName">Name</label>
+                <input type="text" id="editName" name="name" required />
+              </div>
+
+              <div class="edit-row">
+                <label for="editUnitAddress">Unit Address</label>
+                <input
+                  type="text"
+                  id="editUnitAddress"
+                  name="unitAddress"
+                  required
+                />
+              </div>
+
+              <div class="edit-row">
+                <label for="editContact">Contact</label>
+                <input type="tel" id="editContact" name="contact" />
+              </div>
+            </div>
+
+            <div class="modal-actions">
+              <button
+                type="button"
+                class="modal-btn cancel"
+                id="cancelEditApplicant"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="modal-btn save"
+                id="saveEditApplicant"
+              >
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- ================= DELETE APPLICANT MODAL ================= -->
+      <div class="modal-overlay" id="deleteApplicantModal">
+        <div class="modal-box">
+          <div class="modal-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="48"
+              height="48"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+              />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+
+          <h3 class="modal-title">Delete Applicant Record?</h3>
+
+          <p class="modal-text">
+            Are you sure you want to delete the complete record of
+            <strong id="deleteApplicantName">this applicant</strong>?
+            <br />
+            <span class="modal-warning">
+              This will also remove all their course enrollments. This action
+              cannot be undone.
+            </span>
+          </p>
+
+          <div class="modal-actions">
+            <button class="modal-btn cancel" id="cancelDeleteApplicant">
+              Cancel
+            </button>
+            <button class="modal-btn confirm" id="confirmDeleteApplicant">
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+      <br />
+      Training Record Management System
+    </footer>
+  </body>
+
+  <script src="/js/applicant/search.js"></script>
+</html>

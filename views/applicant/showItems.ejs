@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Items Receiving List | SDC Pilkhuwa</title>
+
+    <link rel="stylesheet" href="/css/applicant/showItems.css" />
+  </head>
+
+  <body>
+    <div class="top-bar"></div>
+
+    <header>
+      <div class="brand">
+        <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+        <div class="brand-text">
+          <h1>SDC Pilkhuwa</h1>
+          <h2>Training Record Management System</h2>
+        </div>
+      </div>
+
+      <div class="organization">
+        <strong>Centre for Fire, Explosive and Environment Safety</strong>
+        <br />
+        Defence Research and Development Organisation
+        <br />
+        Ministry of Defence, Government of India
+      </div>
+    </header>
+
+    <main>
+      <section class="page-header">
+        <div class="page-label">
+          Training Records · Course Information
+        </div>
+        <h1>Items Receiving List</h1>
+        <p>View the items received by applicants enrolled in this course.</p>
+      </section>
+
+      <section class="table-card">
+        <div class="table-header">
+          <h2>Items Received by Applicants</h2>
+        </div>
+
+        <div class="table-wrapper">
+          <% if (enrollDoc.length > 0) { %>
+            <form action="/applicant/<%= enrollDoc[0].courseId %>/items" method="POST">
+              <% enrollDoc.forEach((enrollment) => { %>
+                <input
+                  type="hidden"
+                  name="enrollmentIds"
+                  value="<%= enrollment._id %>"
+                />
+              <% }) %>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>S. No.</th>
+                    <th>Personnel Number</th>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Course Kit</th>
+                    <th>Study Material</th>
+                    <th>Photograph</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% enrollDoc.forEach((enrollment, index) => { %>
+                    <tr>
+                      <td><%= index + 1 %></td>
+                      <td><%= enrollment.applicantId.personnelNumber %></td>
+                      <td><%= enrollment.applicantId.rank %></td>
+                      <td class="name"><%= enrollment.applicantId.name %></td>
+
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="item-checkbox"
+                          name="courseKit"
+                          value="<%= enrollment._id %>"
+                          <%= enrollment.itemsReceived.courseKit ? "checked" : "" %>
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="item-checkbox"
+                          name="studyMaterial"
+                          value="<%= enrollment._id %>"
+                          <%= enrollment.itemsReceived.studyMaterial ? "checked" : "" %>
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="item-checkbox"
+                          name="photograph"
+                          value="<%= enrollment._id %>"
+                          <%= enrollment.itemsReceived.photograph ? "checked" : "" %>
+                        />
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+
+              <div class="save-section">
+                <button type="submit" class="save-btn">
+                  Save Items
+                </button>
+
+                <a href="/applicant/<%= enrollDoc[0].courseId %>/items/pdf" class="export-btn export-pdf">
+                  Export to PDF
+                </a>
+
+                <a href="/applicant/<%= enrollDoc[0].courseId %>/items/excel" class="export-btn export-excel">
+                  Export to Excel
+                </a>
+              </div>
+            </form>
+          <% } else { %>
+            <div class="empty">
+              No enrollment records found for this course.
+            </div>
+          <% } %>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+      <br />
+      Training Record Management System
+    </footer>
+  </body>
+</html>

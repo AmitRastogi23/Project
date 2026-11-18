@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOS Report | SDC Pilkhuwa</title>
+  <link rel="stylesheet" href="/css/applicant/showSOS.css" />
+</head>
+
+<body>
+  <div class="top-bar"></div>
+
+  <header>
+    <div class="brand">
+      <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+      <div class="brand-text">
+        <h1>SDC Pilkhuwa</h1>
+        <h2>Training Record Management System</h2>
+      </div>
+    </div>
+    <div class="organization">
+      <strong>Centre for Fire, Explosive and Environment Safety</strong>
+      <br />
+      Defence Research and Development Organisation
+      <br />
+      Ministry of Defence, Government of India
+    </div>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <div class="page-label">Training Records · SOS</div>
+      <h1>Stuck of Service (SOS) Report</h1>
+      <p>View and manage SOS dates for applicants enrolled in this course.</p>
+    </section>
+
+    <!-- ===== EXPORT BUTTONS (Right Aligned) ===== -->
+    <section class="marks-info-card">
+      <div class="marks-info-right">
+        <a href="/applicant/<%= enrollDoc[0].courseId %>/SOS/pdf" class="export-btn pdf-btn">
+          📄 Export to PDF
+        </a>
+        <a href="/applicant/<%= enrollDoc[0].courseId %>/SOS/excel" class="export-btn excel-btn">
+          📊 Export to Excel
+        </a>
+      </div>
+    </section>
+
+    <section class="table-card">
+      <div class="table-header">
+        <h2>Stuck of Service (SOS) Details</h2>
+      </div>
+
+      <div class="table-wrapper">
+        <% if (enrollDoc && enrollDoc.length > 0) { %>
+          <table>
+            <thead>
+              <tr>
+                <th>S. No.</th>
+                <th>Personnel No.</th>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>SOS Date</th>
+                <th>SOS Reason</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% enrollDoc.forEach((enrollment, index) => { 
+                const SOS = enrollment.SOS || null;
+                const SOSDate = SOS !== null 
+                  ? new Date(SOS).toLocaleDateString("en-IN")
+                  : "--------";
+                const SOSReason = enrollment.SOSReason || "--------";
+                const btn_msg = SOS !== null ? "Change SOS" : "Add SOS";
+                
+                // Format date for input field (YYYY-MM-DD)
+                const formattedDate = SOS !== null 
+                  ? new Date(SOS).toISOString().split('T')[0]
+                  : '';
+              %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td><%= enrollment.applicantId.personnelNumber %></td>
+                  <td><%= enrollment.applicantId.rank %></td>
+                  <td><strong><%= enrollment.applicantId.name %></strong></td>
+                  <td class="sos-date"><%= SOSDate %></td>
+                  <td><%= SOSReason %></td>
+                  <td>
+                    <button class="add-sos-btn" onclick="openSOSModal('<%= enrollment._id %>', '<%= SOSReason %>', '<%= formattedDate %>')">
+                      <%= btn_msg %>
+                    </button>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <div class="empty">
+            No enrollment records found for this course.
+          </div>
+        <% } %>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+    <br />
+    Training Record Management System
+  </footer>
+
+  <!-- ===== SOS MODAL ===== -->
+  <div id="SOSModal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle">Add SOS Details</h3>
+        <button class="modal-close" onclick="closeSOSModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="SOSForm" method="POST">
+          <input type="hidden" name="enrollmentId" id="modalEnrollmentId" />
+          
+          <div class="form-group">
+            <label for="SOSDate">Select Date</label>
+            <input type="date" name="date" id="SOSDate" required />
+          </div>
+
+          <div class="form-group">
+            <label for="SOSReason">SOS Reason</label>
+            <input type="text" name="reason" id="SOSReason" placeholder="Enter reason for SOS" />
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-cancel" onclick="closeSOSModal()">Cancel</button>
+            <button type="submit" class="btn-save">Save SOS</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/applicant/showSOS.js"></script>
+</body>
+</html>

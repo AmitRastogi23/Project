@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= course.courseNumber %> - Schedule</title>
+    <link rel="stylesheet" href="/css/schedule/show.css">
+    <script src="/pdfjs/pdf.min.js"></script>
+</head>
+<body>
+<div class="app-container">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Weeks</h2>
+        </div>
+        <div class="week-list">
+            <% schedule.weeks.forEach((week, index) => { %>
+                <button class="week-btn <%= index === 0 ? 'active' : '' %>" data-week-index="<%= index %>">
+                    <span class="week-number">Week <%= week.weekNumber %></span>
+                    <span class="week-duration">
+                        <% 
+                            let startDate = new Date(week.days[0].date);
+                            let endDate = new Date(week.days[week.days.length - 1].date);
+                            let startStr = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                            let endStr = endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        %>
+                        <%= startStr %> - <%= endStr %>
+                    </span>
+                </button>
+            <% }) %>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="course-info">
+                <h1><%= course.courseNumber %> - <%= course.courseName %></h1>
+                <p>Manage your weekly schedule</p>
+            </div>
+            <button type="button" class="download-pdf-btn" id="previewPdfBtn">
+                <span class="download-icon">👁</span>
+                Preview
+            </button>
+        </div>
+        <div class="schedule-container">
+            <% schedule.weeks.forEach((week, weekIndex) => { %>
+                <div class="week-content <%= weekIndex === 0 ? 'active' : '' %>" id="week-<%= weekIndex %>">
+
+                    <!-- ═════════ Documentation Support Bar (Even Weeks Only) ═════════ -->
+                    <% if (week.weekNumber % 2 === 0) { %>
+                        <div class="doc-support-bar">
+                            <div class="doc-support-info">
+                                <span class="doc-support-label">Documentation Support:</span>
+                                <span class="doc-support-names" id="docSupportNames-<%= weekIndex %>">
+                                    <%
+                                        const names = [];
+                                        if (week.docSupport1 && week.docSupport1.trim()) names.push(week.docSupport1.trim());
+                                        if (week.docSupport2 && week.docSupport2.trim()) names.push(week.docSupport2.trim());
+                                    %>
+                                    <%= names.length > 0 ? names.join(", ") : "Not set" %>
+                                </span>
+                            </div>
+                            <button
+                                type="button"
+                                class="edit-doc-support-btn"
+                                data-week-index="<%= weekIndex %>"
+                                data-week-number="<%= week.weekNumber %>"
+                            >
+                                ✏️ Edit
+                            </button>
+                        </div>
+                    <% } %>
+
+                    <div class="day-tabs">
+                        <% week.days.forEach((day, dayIndex) => { 
+                            const dayDate = new Date(day.date);
+                            const toYMD = (d) => {
+                                const dt = new Date(d);
+                                return `${dt.getUTCFullYear()}-${String(dt.getUTCMonth()+1).padStart(2,'0')}-${String(dt.getUTCDate()).padStart(2,'0')}`;
+                            };
+
+                            const holiday = holidays ? holidays.find(h => toYMD(h.date) === toYMD(day.date)) : null;
+                        %>
+                            <button class="day-tab <%= dayIndex === 0 ? 'active' : '' %> <%= holiday ? 'has-holiday' : '' %>" data-day-index="<%= dayIndex %>" data-week-index="<%= weekIndex %>">
+                                <span class="day-name"><%= day.day %></span>
+                                <span class="day-date"><%= new Date(day.date).toLocaleDateString() %></span>
+                                <% if (holiday) { %>
+                                    <span class="holiday-indicator">🎉</span>
+                                <% } %>
+                            </button>
+                        <% }) %>
+                    </div>
+                    <div class="day-content-wrapper">
+                        <% week.days.forEach((day, dayIndex) => { 
+                            const dayDate = new Date(day.date);
+                            const holiday = holidays ? holidays.find(h => {
+                                const hDate = new Date(h.date);
+                                return hDate.getFullYear() === dayDate.getFullYear() &&
+                                       hDate.getMonth() === dayDate.getMonth() &&
+                                       hDate.getDate() === dayDate.getDate();
+                            }) : null;
+                        %>
+                            <div class="day-content <%= dayIndex === 0 ? 'active' : '' %>" id="day-<%= weekIndex %>-<%= dayIndex %>">
+                                <% if (holiday) { %>
+                                    <div class="holiday-banner">
+                                        <div class="holiday-icon">🎉</div>
+                                        <div class="holiday-content">
+                                            <div class="holiday-title">Holiday</div>
+                                            <div class="holiday-occasion"><%= holiday.Occasion %></div>
+                                        </div>
+                                    </div>
+                                <% } else { %>
+                                    <div class="sessions-list">
+                                        <% if (day.sessions && day.sessions.length > 0) { %>
+                                            <% const sortedSessions = [...day.sessions].sort((a, b) => a.startTime.localeCompare(b.startTime)); %>
+                                            <% sortedSessions.forEach((session) => { %>
+                                                <div
+                                                    class="session-item"
+                                                    data-session-id="<%= session._id %>"
+                                                >
+                                                    <div class="session-time">
+                                                        <span class="start"><%= session.startTime %></span>
+                                                        <span class="separator">-</span>
+                                                        <span class="end"><%= session.endTime %></span>
+                                                    </div>
+                                                    <div class="session-type <%= session.type.toLowerCase() %>">
+                                                        <%= session.type.replace('_', ' ') %>
+                                                    </div>
+                                                    <% if (session.title) { %>
+                                                        <div class="session-title"><%= session.title %></div>
+                                                    <% } %>
+                                                    <% if (session.faculty) { %>
+                                                    <div class="session-faculty"
+                                                        data-faculty-value="<%= typeof session.faculty === 'object' && session.faculty?._id ? session.faculty._id : session.faculty %>">
+                                                    <span class="label">Faculty:</span>
+                                                    <%= typeof session.faculty === "string" ? session.faculty : (session.faculty?.name || "") %>
+                                                    </div>
+                                                    <% } %>
+                                                    <% if (session.type === "INSTRUCTIONAL_VISIT" && session.location) { %>
+                                                        <div class="session-location">
+                                                            <span class="label">Location:</span>
+                                                            <%= session.location %>
+                                                        </div>
+                                                    <% } %>
+
+                                                    <div class="session-actions">
+                                                        <button
+                                                            type="button"
+                                                            class="edit-session-btn"
+                                                            title="Edit Session"
+                                                        >
+                                                            ✏️
+                                                        </button>
+
+                                                        <button
+                                                            type="button"
+                                                            class="delete-session-btn"
+                                                            title="Delete Session"
+                                                        >
+                                                            🗑️
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            <% }) %>
+                                        <% } %>
+                                    </div>
+                                    <div class="add-session-container">
+                                        <button class="add-session-btn" data-week="<%= week.weekNumber %>" data-day="<%= day.day %>" data-date="<%= day.date %>" data-week-index="<%= weekIndex %>" data-day-index="<%= dayIndex %>">
+                                            + Add Session
+                                        </button>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+<!-- ═════════ Class Modal ═════════ -->
+<div class="modal" id="classModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Add Session</h2>
+            <button type="button" class="close-btn" id="closeModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="session-type-selector">
+                <button type="button" class="type-option" data-type="PRACTICAL">Practical</button>
+                <button type="button" class="type-option" data-type="THEORY">Theory</button>
+                <button type="button" class="type-option" data-type="SQUAD_DRILL">Squad Drill</button>
+                <button type="button" class="type-option" data-type="ROLL_CALL">Roll Call</button>
+                <button type="button" class="type-option" data-type="BREAK">Break</button>
+                <button type="button" class="type-option" data-type="LUNCH">Lunch</button>
+                <button type="button" class="type-option" data-type="GAMES">Games</button>
+                <button type="button" class="type-option" data-type="MAINTENANCE">Maintenance</button>
+
+                <button type="button" class="type-option" data-type="MID_TERM">MID-TERM</button>
+                <button type="button" class="type-option" data-type="FINAL_TERM">FINAL-TERM</button>
+                <button type="button" class="type-option" data-type="INSTRUCTIONAL_VISIT">Instructional Visit</button>
+                <button type="button" class="type-option" data-type="REVISION">Revision</button>
+                <button type="button" class="type-option" data-type="VALEDICTORY_FUNCTION">Valedictory Function</button>
+                <button type="button" class="type-option" data-type="OTHER">Other</button>
+            </div>
+            <form id="classForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startTime">Start Time</label>
+                        <input type="time" id="startTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endTime">End Time</label>
+                        <input type="time" id="endTime" required>
+                    </div>
+                </div>
+
+                <div class="extra-fields" id="extraFields" style="display:none;">
+                    <div class="form-group">
+                        <label for="classTitle">Lecture Title</label>
+                        <input type="text" id="classTitle" placeholder="Enter lecture title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="classFaculty">Faculty</label>
+                        <select id="classFaculty">
+                            <option value="">Select Faculty</option>
+                            <% faculties.forEach(faculty => { %>
+                                <option value="<%= faculty._id %>"><%= faculty.name %></option>
+                            <% }) %>
+                            <option value="Guest Faculty">Guest Faculty</option>
+                            <option value="Guest Faculty AAI">Guest Faculty AAI</option>
+                            <option value="Guest Faculty INMAS">Guest Faculty INMAS</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" id="visitLocationGroup" style="display:none;">
+                    <label for="visitLocation">Location</label>
+                    <input type="text" id="visitLocation" placeholder="Enter visit location">
+                </div>
+
+                <input type="hidden" id="classType" value="">
+
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" id="cancelModal">Cancel</button>
+                    <button type="submit" class="save-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ═════════ Delete Confirm Modal ═════════ -->
+<div class="modal" id="deleteConfirmModal">
+    <div class="modal-content delete-confirm-modal">
+        <div class="modal-header">
+            <h2>Delete Session</h2>
+            <button
+                type="button"
+                class="close-btn"
+                id="closeDeleteModal"
+            >
+                &times;
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="delete-confirm-content">
+                <div class="delete-warning-icon">
+                    🗑️
+                </div>
+                <h3>Delete this session?</h3>
+                <p>
+                    Are you sure you want to delete this session?
+                    This action cannot be undone.
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelDelete"
+                >
+                    Cancel
+                </button>
+                <button
+                    type="button"
+                    class="delete-confirm-btn"
+                    id="confirmDelete"
+                >
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═════════ Documentation Support Modal ═════════ -->
+<div class="modal" id="docSupportModal">
+    <div class="modal-content doc-support-modal">
+        <div class="modal-header">
+            <h2>Edit Documentation Support</h2>
+            <button type="button" class="close-btn" id="closeDocSupportModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p class="doc-support-hint">
+                Enter the names of personnel assigned for documentation support this week (up to 2).
+            </p>
+
+            <form id="docSupportForm">
+                <input type="hidden" id="docSupportWeekIndex" />
+
+                <div class="form-group">
+                    <label for="docSupportInput1">Person 1</label>
+                    <input
+                        type="text"
+                        id="docSupportInput1"
+                        placeholder="e.g. Sh. Pradeep Kumar Sharma TO 'B'"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="docSupportInput2">Person 2</label>
+                    <input
+                        type="text"
+                        id="docSupportInput2"
+                        placeholder="e.g. Sh. Rajat, Tech 'A'"
+                    >
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" id="cancelDocSupport">
+                        Cancel
+                    </button>
+                    <button type="submit" class="save-btn" id="saveDocSupport">
+                        Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ═════════ PDF Preview Modal ═════════ -->
+<div class="modal" id="pdfPreviewModal">
+    <div class="modal-content pdf-preview-modal">
+        <div class="modal-header">
+            <h2>Schedule - PDF Preview</h2>
+            <button
+                type="button"
+                class="close-btn"
+                id="closePdfPreview"
+            >
+                &times;
+            </button>
+        </div>
+        <div class="modal-body pdf-preview-body" id="pdfPreviewBody">
+            <div class="loading-text">
+                Loading PDF preview...
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button
+                type="button"
+                class="cancel-btn"
+                id="cancelPdfPreview"
+            >
+                Close
+            </button>
+            <a
+                href="/course/<%= course._id %>/schedule/pdf"
+                class="save-btn"
+                id="downloadPreviewPdf"
+                download
+            >
+                Download PDF
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+  window.courseId = "<%= course._id %>";
+</script>
+<script src="/js/schedule/show.js"></script>
+</body>
+</html>

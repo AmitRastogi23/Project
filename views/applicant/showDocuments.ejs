@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Documents Verification List | SDC Pilkhuwa</title>
+    <link rel="stylesheet" href="/css/applicant/showDocument.css" />
+  </head>
+
+  <body>
+    <div class="top-bar"></div>
+
+    <header>
+      <div class="brand">
+        <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+
+        <div class="brand-text">
+          <h1>SDC Pilkhuwa</h1>
+          <h2>Training Record Management System</h2>
+        </div>
+      </div>
+
+      <div class="organization">
+        <strong>
+          Centre for Fire, Explosive and Environment Safety
+        </strong>
+
+        <br />
+
+        Defence Research and Development Organisation
+
+        <br />
+
+        Ministry of Defence, Government of India
+      </div>
+    </header>
+
+    <main>
+      <section class="page-header">
+        <div class="page-label">
+          Training Records · Course Information
+        </div>
+
+        <h1>Documents Verification List</h1>
+
+        <p>
+          View the documents submitted by applicants enrolled in this course.
+        </p>
+      </section>
+
+      <section class="table-card">
+        <div class="table-header">
+          <h2>Documents Submitted by Applicants</h2>
+        </div>
+
+        <div class="table-wrapper">
+          <% if (enrollDoc.length > 0) { %>
+
+            <form
+              action="/applicant/<%= enrollDoc[0].courseId %>/documents"
+              method="POST"
+            >
+              <% enrollDoc.forEach((enrollment) => { %>
+                <input
+                  type="hidden"
+                  name="enrollmentIds"
+                  value="<%= enrollment._id %>"
+                />
+              <% }) %>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>S.<br />No.</th>
+                    <th>Personnel<br />Number</th>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Movement<br />Order</th>
+                    <th>3 Yrs Residual<br />Service Cert.</th>
+                    <th>Medical<br />Certificate</th>
+                    <th>Qualification<br />Documents</th>
+                    <th>Previous Course<br />Certificate</th>
+                    <th>Passport<br />Size<br />Photo</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% enrollDoc.forEach((enrollment, index) => { %>
+                    <tr>
+                      <td><%= index + 1 %></td>
+                      <td><%= enrollment.applicantId.personnelNumber %></td>
+                      <td><%= enrollment.applicantId.rank %></td>
+                      <td class="name"><%= enrollment.applicantId.name %></td>
+
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="item-checkbox"
+                          name="movementOrder"
+                          value="<%= enrollment._id %>"
+                          <%= enrollment.documentsReceived.movementOrder ? "checked" : "" %>
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="item-checkbox"
+                          name="resServiceCertificate"
+                          value="<%= enrollment._id %>"
+                          <%= enrollment.documentsReceived.resServiceCertificate ? "checked" : "" %>
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="item-checkbox"
+                          name="medCertificate"
+                          value="<%= enrollment._id %>"
+                          <%= enrollment.documentsReceived.medCertificate ? "checked" : "" %>
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="item-checkbox"
+                          name="qualificationDocuments"
+                          value="<%= enrollment._id %>"
+                          <%= enrollment.documentsReceived.qualificationDocuments ? "checked" : "" %>
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="item-checkbox"
+                          name="prevCourseCertificate"
+                          value="<%= enrollment._id %>"
+                          <%= enrollment.documentsReceived.prevCourseCertificate ? "checked" : "" %>
+                        />
+                      </td>
+
+                      <td>
+                        <input
+                          type="checkbox"
+                          class="item-checkbox"
+                          name="passportPhoto"
+                          value="<%= enrollment._id %>"
+                          <%= enrollment.documentsReceived.passportPhoto ? "checked" : "" %>
+                        />
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+
+              <div class="save-section">
+                <button type="submit" class="save-btn">
+                  Save Documents
+                </button>
+
+                <a
+                  href="/applicant/<%= enrollDoc[0].courseId %>/documents/pdf"
+                  class="print-btn"
+                >
+                  Export to PDF
+                </a>
+
+                <a
+                  href="/applicant/<%= enrollDoc[0].courseId %>/documents/excel"
+                  class="excel-btn"
+                >
+                  Export to Excel
+                </a>
+              </div>
+            </form>
+
+          <% } else { %>
+
+            <div class="empty">
+              No enrollment records found for this course.
+            </div>
+
+          <% } %>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+      <br />
+      Training Record Management System
+    </footer>
+  </body>
+</html>

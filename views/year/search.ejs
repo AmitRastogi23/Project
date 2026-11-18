@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training Years | SDC Pilkhuwa</title>
+  <link rel="stylesheet" href="/css/year/search.css" />
+</head>
+
+<body>
+  <div class="top-bar"></div>
+
+  <!-- ================= HEADER ================= -->
+  <header>
+    <div class="brand">
+      <img src="/images/cfees-logo.png" alt="CFEES Logo" />
+      <div class="brand-text">
+        <h1>SDC Pilkhuwa</h1>
+        <h2>Training Record Management System</h2>
+      </div>
+    </div>
+    <div class="organization">
+      <strong>Centre for Fire, Explosive and Environment Safety</strong>
+      <br />
+      Defence Research and Development Organisation
+      <br />
+      Ministry of Defence, Government of India
+    </div>
+  </header>
+
+  <main>
+    <!-- ================= PAGE TITLE / HERO ================= -->
+    <section class="page-header">
+      <div class="page-header-content">
+        <div class="page-label">Training Records · Archive</div>
+        <h1>Training Years</h1>
+        <p>Select a year folder to view the courses, gazetted holidays, and applicant records.</p>
+      </div>
+    </section>
+
+    <!-- ================= SECTION HEADER ================= -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Available Years</h2>
+        <p class="section-subtitle">Click on any training year folder to explore its records</p>
+      </div>
+      <span class="badge"><%= years ? years.length : 0 %> Training Archives</span>
+    </div>
+
+    <!-- ================= FOLDERS GRID ================= -->
+    <section class="grid">
+      <% if (!years || years.length === 0) { %>
+        <div class="empty-state">
+          <div class="empty-icon">📂</div>
+          <h4>No Training Years Found</h4>
+          <p>There are currently no training years created in the system.</p>
+        </div>
+      <% } else { %>
+        <% years.forEach((year) => { %>
+          <a href="/year/<%= year._id %>" class="folder-card">
+            <!-- Modern Interactive Vector Folder Graphic -->
+            <div class="folder-graphic-wrapper">
+              <svg class="folder-svg" viewBox="0 0 92 76" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="folderBackGrad-<%= year._id %>" x1="6" y1="8" x2="86" y2="70" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#1B4D7E" />
+                    <stop offset="1" stop-color="#0E2D4C" />
+                  </linearGradient>
+                  <linearGradient id="folderFrontGrad-<%= year._id %>" x1="6" y1="26" x2="86" y2="70" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#25649F" />
+                    <stop offset="1" stop-color="#123A63" />
+                  </linearGradient>
+                  <linearGradient id="goldTab-<%= year._id %>" x1="12" y1="8" x2="36" y2="20" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#E5C158" />
+                    <stop offset="1" stop-color="#C69A3A" />
+                  </linearGradient>
+                  <filter id="folderShadow-<%= year._id %>" x="0" y="4" width="92" height="72" filterUnits="userSpaceOnUse">
+                    <feDropShadow dx="0" dy="6" stdDeviation="4" flood-color="#081A2D" flood-opacity="0.25" />
+                  </filter>
+                </defs>
+                <!-- Folder Back with Tab -->
+                <path d="M6 16C6 11.5817 9.58172 8 14 8H35.1716C37.2934 8 39.3284 8.84285 40.8284 10.3428L45.4142 14.9286C46.9142 16.4285 48.9493 17.2714 51.0711 17.2714H78C82.4183 17.2714 86 20.8531 86 25.2714V62C86 66.4183 82.4183 70 78 70H14C9.58172 70 6 66.4183 6 62V16Z" fill="url(#folderBackGrad-<%= year._id %>)"/>
+                <!-- Gold Accent on Tab -->
+                <path d="M14 8H35.1716C37.2934 8 39.3284 8.84285 40.8284 10.3428L44 13.5H14C10.6863 13.5 8 10.8137 8 8V8C9.6 8 11.8 8 14 8Z" fill="url(#goldTab-<%= year._id %>)"/>
+                <!-- Paper Sheets Inside -->
+                <rect class="folder-paper folder-paper-back" x="18" y="16" width="56" height="38" rx="4" fill="#E2E8F0"/>
+                <rect class="folder-paper folder-paper-front" x="22" y="13" width="48" height="40" rx="4" fill="#FFFFFF"/>
+                <line x1="28" y1="21" x2="48" y2="21" stroke="#CBD5E1" stroke-width="2.5" stroke-linecap="round"/>
+                <line x1="28" y1="27" x2="62" y2="27" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+                <line x1="28" y1="33" x2="56" y2="33" stroke="#E2E8F0" stroke-width="2" stroke-linecap="round"/>
+                <!-- Folder Front Flap -->
+                <path class="folder-front-flap" d="M6 31C6 26.5817 9.58172 23 14 23H78C82.4183 23 86 26.5817 86 31V62C86 66.4183 82.4183 70 78 70H14C9.58172 70 6 66.4183 6 62V31Z" fill="url(#folderFrontGrad-<%= year._id %>)" filter="url(#folderShadow-<%= year._id %>)"/>
+              </svg>
+            </div>
+
+            <!-- Folder Year & Details -->
+            <div class="folder-body">
+              <h3 class="folder-year-title"><%= year.year %></h3>
+              <div class="folder-meta-row">
+                <div class="meta-item">
+                  <span>📚</span>
+                  <span><strong><%= year.courses ? year.courses.length : 0 %></strong> Courses</span>
+                </div>
+                <div class="meta-divider">·</div>
+                <div class="meta-item">
+                  <span>📅</span>
+                  <span><strong><%= year.holidays ? year.holidays.length : 0 %></strong> Holidays</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="folder-action">
+              <span>Open Records</span>
+              <span class="action-arrow">→</span>
+            </div>
+          </a>
+        <% }) %>
+      <% } %>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <strong>SDC Pilkhuwa | CFEES, DRDO</strong>
+    <br />
+    Training Record Management System
+  </footer>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Honorarium | SDC Pilkhuwa</title>
+    <link rel="stylesheet" href="/css/course/honorarium.css" />
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <header class="page-header">
+        <div class="page-label">Training Records · Downloads</div>
+        <h1>Honorarium Downloads</h1>
+        <p>Generate honorarium sheets for the selected course.</p>
+      </header>
+
+      <div class="card-grid">
+        <!-- 1. Practical Classes -->
+        <button
+          class="action-card"
+          data-action="practical"
+          data-course-id="<%= courseId %>"
+        >
+          <div class="card-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+              ></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <div class="card-content">
+            <span class="card-label">Practical Classes</span>
+            <span class="card-desc"
+              >Download honorarium sheet for practical sessions</span
+            >
+          </div>
+          <div class="card-arrow">→</div>
+        </button>
+
+        <!-- 2. Theory Classes -->
+        <button
+          class="action-card"
+          data-action="theory"
+          data-course-id="<%= courseId %>"
+        >
+          <div class="card-icon icon-orange">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path
+                d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+              ></path>
+            </svg>
+          </div>
+          <div class="card-content">
+            <span class="card-label">Theory Classes</span>
+            <span class="card-desc"
+              >Download honorarium sheet for theory sessions</span
+            >
+          </div>
+          <div class="card-arrow">→</div>
+        </button>
+
+        <!-- 3. Examiner (Mid/Final) -->
+        <button
+          class="action-card"
+          data-action="examiner"
+          data-course-id="<%= courseId %>"
+        >
+          <div class="card-icon icon-green">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          </div>
+          <div class="card-content">
+            <span class="card-label">Examination — Examiner</span>
+            <span class="card-desc"
+              >Honorarium for Theory & Practical (Mid/Final)</span
+            >
+          </div>
+          <div class="card-arrow">→</div>
+        </button>
+
+        <!-- 4. Invigilator (Mid/Final) -->
+        <button
+          class="action-card"
+          data-action="invigilator"
+          data-course-id="<%= courseId %>"
+        >
+          <div class="card-icon icon-purple">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <div class="card-content">
+            <span class="card-label">Examination — Invigilator</span>
+            <span class="card-desc"
+              >Honorarium for Theory & Practical (Mid/Final)</span
+            >
+          </div>
+          <div class="card-arrow">→</div>
+        </button>
+
+        <!-- 5. Travelling Allowance -->
+        <button
+          class="action-card"
+          data-action="travel"
+          data-course-id="<%= courseId %>"
+        >
+          <div class="card-icon icon-blue">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+              ></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+          </div>
+          <div class="card-content">
+            <span class="card-label">Travelling Allowance</span>
+            <span class="card-desc"
+              >Download travelling allowance statement</span
+            >
+          </div>
+          <div class="card-arrow">→</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- ═════════ Practical Modal ═════════ -->
+    <div class="modal-overlay" id="practical-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Practical Instructor Details</h3>
+          <span class="close-btn" id="close-practical-modal">&times;</span>
+        </div>
+
+        <form id="practical-form" class="modal-body">
+          <div class="form-group">
+            <label for="practical-name">Name</label>
+            <input
+              type="text"
+              id="practical-name"
+              name="name"
+              placeholder="Enter instructor name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="practical-rank">Rank</label>
+            <input
+              type="text"
+              id="practical-rank"
+              name="rank"
+              placeholder="e.g. Sc 'E', TO 'B'"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="practical-address">Address</label>
+            <textarea
+              id="practical-address"
+              name="address"
+              rows="3"
+              placeholder="Enter full address"
+              required
+            ></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-cancel" id="cancel-practical-btn">
+              Cancel
+            </button>
+            <button type="submit" class="btn-submit" id="submit-practical-btn">
+              Generate PDF
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═════════ Exam Modal (Examiner / Invigilator) ═════════ -->
+    <div class="modal-overlay" id="exam-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3 id="exam-modal-title">Examination Details</h3>
+          <span class="close-btn" id="close-exam-modal">&times;</span>
+        </div>
+
+        <form id="exam-form" class="modal-body">
+          <input type="hidden" id="exam-role" value="" />
+
+          <div class="form-group">
+            <label for="exam-type-select">Select Exam Type</label>
+            <select id="exam-type-select" required>
+              <option value="" disabled selected>Select Mid or Final</option>
+              <option value="MID-TERM">MID-TERM</option>
+              <option value="FINAL-TERM">FINAL-TERM</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="exam-faculty-select">Select Faculty (Auto-fill)</label>
+            <select id="exam-faculty-select">
+              <option value="" disabled selected>-- Select Faculty --</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="exam-name">Name</label>
+            <input
+              type="text"
+              id="exam-name"
+              placeholder="Enter full name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="exam-rank">Rank</label>
+            <input
+              type="text"
+              id="exam-rank"
+              placeholder="e.g. Sc 'E', TO 'B'"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="exam-address">Address</label>
+            <textarea
+              id="exam-address"
+              rows="3"
+              placeholder="Enter full address"
+              required
+            ></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-cancel" id="cancel-exam-btn">
+              Cancel
+            </button>
+            <button type="submit" class="btn-submit" id="submit-exam-btn">
+              Generate PDF
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═════════ Theory Modal ═════════ -->
+    <div class="modal-overlay" id="theory-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Theory Lecture Details</h3>
+          <span class="close-btn" id="close-theory-modal">&times;</span>
+        </div>
+
+        <form id="theory-form" class="modal-body">
+          <div class="form-group">
+            <label for="theory-select">Select Theory Lecture</label>
+            <select id="theory-select" required>
+              <option value="" disabled selected>-- Select Lecture --</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="theory-title">Topic / Title</label>
+            <input
+              type="text"
+              id="theory-title"
+              readonly
+              style="background-color: #f0f0f0"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="theory-name">Name</label>
+            <input
+              type="text"
+              id="theory-name"
+              placeholder="Enter full name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="theory-rank">Rank</label>
+            <input
+              type="text"
+              id="theory-rank"
+              placeholder="e.g. Sc 'E', TO 'B'"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="theory-address">Address</label>
+            <textarea
+              id="theory-address"
+              rows="2"
+              placeholder="Enter full address"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="theory-sessions">No. of Sessions</label>
+            <input type="number" id="theory-sessions" min="1" required />
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-cancel" id="cancel-theory-btn">
+              Cancel
+            </button>
+            <button type="submit" class="btn-submit" id="submit-theory-btn">
+              Generate PDF
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ═════════ Travel Modal ═════════ -->
+    <div class="modal-overlay" id="travel-modal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Travelling Allowance Details</h3>
+          <span class="close-btn" id="close-travel-modal">&times;</span>
+        </div>
+
+        <form id="travel-form" class="modal-body">
+          <div class="form-group">
+            <label for="travel-visit-type">Visit Type</label>
+            <select id="travel-visit-type" required>
+              <option value="" disabled selected>
+                -- Select Visit Type --
+              </option>
+              <option value="practical">Conducting Practical Classes</option>
+              <option value="theory">Conduction Theory Classes</option>
+              <option value="final">
+                Conduction Final Term Theory & Practical Exam
+              </option>
+              <option value="mid">
+                Conducting Mid Term Theory & Practical Exam
+              </option>
+            </select>
+          </div>
+
+          <!-- Dynamic Wrapper: Theory Lecture Select -->
+          <div class="form-group dynamic-field" id="travel-theory-wrapper">
+            <label for="travel-theory-select"
+              >Select Theory Lecture (Auto-fill)</label
+            >
+            <select id="travel-theory-select">
+              <option value="" disabled selected>-- Select Lecture --</option>
+            </select>
+          </div>
+
+          <!-- Dynamic Wrapper: Exam Faculty Select -->
+          <div class="form-group dynamic-field" id="travel-exam-wrapper">
+            <label for="travel-exam-faculty-select"
+              >Select Faculty (Auto-fill)</label
+            >
+            <select id="travel-exam-faculty-select">
+              <option value="" disabled selected>-- Select Faculty --</option>
+            </select>
+          </div>
+
+          <!-- Hidden Input for Lecture Title (only for theory) -->
+          <input type="hidden" id="travel-lecture-title" />
+
+          <div class="form-group">
+            <label for="travel-name">Name</label>
+            <input
+              type="text"
+              id="travel-name"
+              placeholder="Enter full name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="travel-rank">Rank</label>
+            <input
+              type="text"
+              id="travel-rank"
+              placeholder="e.g. Sc 'E', TO 'B'"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="travel-address">Address</label>
+            <textarea
+              id="travel-address"
+              rows="2"
+              placeholder="Enter full address"
+              required
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="travel-distance">Distance (in km)</label>
+            <input
+              type="number"
+              id="travel-distance"
+              min="0"
+              step="0.1"
+              placeholder="e.g. 150"
+              required
+            />
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn-cancel" id="cancel-travel-btn">
+              Cancel
+            </button>
+            <button type="submit" class="btn-submit" id="submit-travel-btn">
+              Generate PDF
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      window.courseId = "<%= courseId %>";
+    </script>
+    <script src="/js/course/honorarium.js"></script>
+  </body>
+</html>

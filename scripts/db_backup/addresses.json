@@ -1,0 +1,35 @@
+[
+  {
+    "_id": "6acf3e283d0278045d687729",
+    "name": "Avtar Singh",
+    "address": "Sh. Avtar Singh ADO (Retd.), DFS\nS-221/69, Gali No 3, Vishnu Garden\nNew Delhi\nPin-110018",
+    "phone": "9811881761",
+    "email": "avtarsingh@gmail.com",
+    "type": "Examiner",
+    "createdAt": "2026-10-14T08:32:40.358Z",
+    "updatedAt": "2026-10-14T08:32:40.358Z",
+    "__v": 0
+  },
+  {
+    "_id": "6acf3e843d0278045d68772a",
+    "name": "Director INMAS",
+    "address": "Director\nInstitue for Nuclear Medicine & Allied Sciences (INMAS)\nLucknow Road,\nTimarpur, Delhi-54",
+    "phone": "",
+    "email": "director@inmas.gov.in",
+    "type": "Guest Faculty's Institute",
+    "createdAt": "2026-10-14T08:34:12.537Z",
+    "updatedAt": "2026-10-14T08:34:12.537Z",
+    "__v": 0
+  },
+  {
+    "_id": "6ae95c41f6295f36ce13754f",
+    "name": "Dharmender Singh Bisht",
+    "address": "2123 Sector 16 A \nVasundra Ghaziabad\nUP 201012",
+    "phone": "7835979844",
+    "email": "dsbisht75@gmail.com",
+    "type": "Examiner",
+    "createdAt": "2026-11-03T04:00:01.833Z",
+    "updatedAt": "2026-11-03T04:00:01.833Z",
+    "__v": 0
+  }
+]

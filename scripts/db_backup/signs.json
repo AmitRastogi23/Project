@@ -1,0 +1,52 @@
+[
+  {
+    "_id": "6a842b0d83002849b564663b",
+    "authorities": [
+      {
+        "key": "director",
+        "designation": "OS",
+        "name": "Arvind Kumar",
+        "_id": "6aab65612f1fb3dee1a796bb"
+      },
+      {
+        "key": "associateDirector",
+        "designation": "Sc 'G'",
+        "name": "Dr. M.K. Kalra",
+        "_id": "6aab65612f1fb3dee1a796bc"
+      },
+      {
+        "key": "courseDirector",
+        "designation": "Sc 'E'",
+        "name": "Lavkush Kumar",
+        "_id": "6aab65612f1fb3dee1a796bd"
+      },
+      {
+        "key": "courseCoordinator",
+        "designation": "Sc 'C'",
+        "name": "Rohit Arse",
+        "_id": "6aab65612f1fb3dee1a796be"
+      },
+      {
+        "key": "deputyCourseCoordinator",
+        "designation": "TO 'C'",
+        "name": "Anil Kumar",
+        "_id": "6aab65612f1fb3dee1a796bf"
+      },
+      {
+        "key": "sub",
+        "designation": "SUB",
+        "name": "Devendra Singh",
+        "_id": "6aab65612f1fb3dee1a796c0"
+      },
+      {
+        "key": "nbSub",
+        "designation": "Nb SUB",
+        "name": "Parmod Kumar",
+        "_id": "6aab65612f1fb3dee1a796c1"
+      }
+    ],
+    "createdAt": "2026-08-18T09:51:09.682Z",
+    "updatedAt": "2026-09-17T03:58:25.768Z",
+    "__v": 2
+  }
+]
