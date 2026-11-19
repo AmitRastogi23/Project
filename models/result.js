@@ -21,7 +21,7 @@ const practicalSchema = new mongoose.Schema(
 
 const conductMarkSchema = new mongoose.Schema(
   {
-    evaluatorKey: { type: String, required: true }, // "eval_1", "eval_2", etc.
+    evaluatorKey: { type: String, required: true },
     marks: { type: Number, default: null },
   },
   { _id: false },
@@ -49,7 +49,6 @@ const resultSchema = new mongoose.Schema(
       midTerm: { type: [practicalSchema], default: [] },
       finalTerm: { type: [practicalSchema], default: [] },
     },
-
     conductKeenness: {
       marks: { type: [conductMarkSchema], default: [] },
       average: { type: Number, default: null },
@@ -57,17 +56,5 @@ const resultSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
-
-resultSchema.pre("save", function () {
-  const marksArr = this.conductKeenness?.marks || [];
-
-  const valid = marksArr
-    .map((m) => m.marks)
-    .filter((m) => typeof m === "number" && !isNaN(m));
-
-  this.conductKeenness.average = valid.length
-    ? Math.round((valid.reduce((a, b) => a + b, 0) / valid.length) * 100) / 100
-    : null;
-});
 
 module.exports = mongoose.model("Result", resultSchema);

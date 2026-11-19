@@ -33,6 +33,21 @@ const courseSchema = new mongoose.Schema({
   },
   courseDuration: Number,
 
+  theoryConfig: {
+    midTerm: {
+      examinerName: { type: String, trim: true, default: "" },
+      invigilatorName: { type: String, trim: true, default: "" },
+      maxMarks: { type: Number, default: 100 },
+      minMarks: { type: Number, default: 40 },
+    },
+    finalTerm: {
+      examinerName: { type: String, trim: true, default: "" },
+      invigilatorName: { type: String, trim: true, default: "" },
+      maxMarks: { type: Number, default: 100 },
+      minMarks: { type: Number, default: 40 },
+    },
+  },
+
   practicalConfig: {
     midTerm: {
       examinerName: { type: String, trim: true, default: "" },

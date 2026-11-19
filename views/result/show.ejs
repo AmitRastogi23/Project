@@ -20,8 +20,15 @@
     <div class="app-container">
         <!-- Sidebar Tabs -->
         <div class="sidebar">
-            <button class="nav-btn active" data-target="theory">📝 Theory</button>
-            
+            <!-- Theory Dropdown -->
+            <div class="nav-dropdown">
+                <button class="nav-btn" id="theoryDropdownBtn">📝 Theory ▾</button>
+                <div class="nav-dropdown-content">
+                    <button class="nav-sub-btn" data-target="theory-mid">Mid-Term</button>
+                    <button class="nav-sub-btn" data-target="theory-final">Final-Term</button>
+                </div>
+            </div>
+
             <!-- Practical Dropdown -->
             <div class="nav-dropdown">
                 <button class="nav-btn" id="practicalDropdownBtn">🛠️ Practical ▾</button>
@@ -38,12 +45,35 @@
         <!-- Main Content -->
         <div class="main-content">
             
-            <!-- ═════════ THEORY TAB ═════════ -->
-            <div class="tab-content active" id="tab-theory">
+            <!-- ═════════ THEORY MID-TERM TAB ═════════ -->
+            <div class="tab-content" id="tab-theory-mid">
                 <div class="tab-header">
-                    <h2>Theory Marks Entry</h2>
-                    <button class="btn-save" id="saveTheoryBtn">Save Theory Marks</button>
+                    <h2>Theory Marks (Mid-Term)</h2>
+                    <button class="btn-save" id="saveTheoryMidBtn">Save Mid-Term Marks</button>
                 </div>
+                
+                <!-- Config Box Mid-Term -->
+                <div class="evaluator-box" style="flex-direction: column; align-items: stretch; gap: 12px;">
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <div class="form-control" style="flex: 1;">
+                                <label>Examiner:</label>
+                                <input type="text" id="tmExaminer" placeholder="Name of Examiner" style="width: 100%;">
+                            </div>
+                            <div class="form-control" style="flex: 1;">
+                                <label>Invigilator(s):</label>
+                                <input type="text" id="tmInvigilator" placeholder="Name of Invigilators" style="width: 100%;">
+                            </div>
+                        </div>
+                        <button class="btn-save" id="saveTheoryMidConfigBtn" style="background: #0284c7;">Save Config</button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #bae6fd;">
+                        <div class="form-control"><label>Max Marks:</label><input type="number" id="tmMaxMarks" placeholder="Max"></div>
+                        <div class="form-control"><label>Min Marks:</label><input type="number" id="tmMinMarks" placeholder="Min"></div>
+                    </div>
+                </div>
+
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -51,10 +81,62 @@
                                 <th class="col-fixed">S.No</th>
                                 <th class="col-pers">Personnel No. & Rank</th>
                                 <th class="col-name">Name</th>
-                                <th>Mid-Term (Max/Obt)</th>
-                                <th>Final-Term P1 (Max/Obt)</th>
+                                <th id="tmThMarks">Mid-Term Marks<br><span class="sub-max-min" id="tmThMaxMin">(00/00)</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% enrollments.forEach((enr, idx) => { %>
+                                <tr data-enrollment-id="<%= enr._id.toString() %>">
+                                    <td class="col-fixed"><%= idx + 1 %></td>
+                                    <td><%= enr.applicantId.personnelNumber %> - <%= enr.applicantId.rank %></td>
+                                    <td><%= enr.applicantId.name %></td>
+                                    <td><input type="number" class="tm-mark" placeholder="Marks"></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═════════ THEORY FINAL-TERM TAB ═════════ -->
+            <div class="tab-content" id="tab-theory-final">
+                <div class="tab-header">
+                    <h2>Theory Marks (Final-Term)</h2>
+                    <button class="btn-save" id="saveTheoryFinalBtn">Save Final-Term Marks</button>
+                </div>
+                
+                <!-- Config Box Final-Term -->
+                <div class="evaluator-box" style="flex-direction: column; align-items: stretch; gap: 12px;">
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <div class="form-control" style="flex: 1;">
+                                <label>Examiner:</label>
+                                <input type="text" id="tfExaminer" placeholder="Name of Examiner" style="width: 100%;">
+                            </div>
+                            <div class="form-control" style="flex: 1;">
+                                <label>Invigilator(s):</label>
+                                <input type="text" id="tfInvigilator" placeholder="Name of Invigilators" style="width: 100%;">
+                            </div>
+                        </div>
+                        <button class="btn-save" id="saveTheoryFinalConfigBtn" style="background: #0284c7;">Save Config</button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #bae6fd;">
+                        <div class="form-control"><label>Max Marks:</label><input type="number" id="tfMaxMarks" placeholder="Max"></div>
+                        <div class="form-control"><label>Min Marks:</label><input type="number" id="tfMinMarks" placeholder="Min"></div>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-fixed">S.No</th>
+                                <th class="col-pers">Personnel No. & Rank</th>
+                                <th class="col-name">Name</th>
+                                <th id="tfThP1">Paper 1<br><span class="sub-max-min" id="tfThP1MaxMin">(00/00)</span></th>
                                 <% if (course.courseName.includes("SENIOR FIRE SUPERVISOR")) { %>
-                                    <th>Final-Term P2 (Max/Obt)</th>
+                                    <th id="tfThP2">Paper 2<br><span class="sub-max-min" id="tfThP2MaxMin">(00/00)</span></th>
                                 <% } %>
                             </tr>
                         </thead>
@@ -64,25 +146,9 @@
                                     <td class="col-fixed"><%= idx + 1 %></td>
                                     <td><%= enr.applicantId.personnelNumber %> - <%= enr.applicantId.rank %></td>
                                     <td><%= enr.applicantId.name %></td>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="number" placeholder="Max" class="theory-t-mid-max">
-                                            <input type="number" placeholder="Obt" class="theory-t-mid-obt">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="number" placeholder="Max" class="theory-t-fin1-max">
-                                            <input type="number" placeholder="Obt" class="theory-t-fin1-obt">
-                                        </div>
-                                    </td>
+                                    <td><input type="number" class="tf-mark tf-p1" placeholder="Marks"></td>
                                     <% if (course.courseName.includes("SENIOR FIRE SUPERVISOR")) { %>
-                                    <td>
-                                        <div class="input-group">
-                                            <input type="number" placeholder="Max" class="theory-t-fin2-max">
-                                            <input type="number" placeholder="Obt" class="theory-t-fin2-obt">
-                                        </div>
-                                    </td>
+                                        <td><input type="number" class="tf-mark tf-p2" placeholder="Marks"></td>
                                     <% } %>
                                 </tr>
                             <% }) %>
@@ -320,6 +386,7 @@
     <script>
         window.courseId = "<%= course._id.toString() %>";
         window.courseConfig = <%- JSON.stringify(course.conductConfig || { maxMarks: 15, minMarks: 9, evaluators: [{key: "eval_1", name: ""}, {key: "eval_2", name: ""}, {key: "eval_3", name: ""}] }) %>;
+        window.theoryConfig = <%- JSON.stringify(course.theoryConfig || {}) %>;
         window.practicalConfig = <%- JSON.stringify(course.practicalConfig || {}) %>;
         window.results = <%- JSON.stringify(results || []) %>;
     </script>
