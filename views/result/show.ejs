@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= course.courseNumber %> - Results</title>
+    <link rel="stylesheet" href="/css/result/show.css">
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="course-info">
+            <h1><%= course.courseNumber %> - <%= course.courseName %></h1>
+            <p>Manage Course Results</p>
+        </div>
+        <button class="btn-preview" id="previewPdfBtn">👁 Preview PDF</button>
+    </div>
+
+    <div class="app-container">
+        <!-- Sidebar Tabs -->
+        <div class="sidebar">
+            <button class="nav-btn active" data-target="theory">📝 Theory</button>
+            
+            <!-- Practical Dropdown -->
+            <div class="nav-dropdown">
+                <button class="nav-btn" id="practicalDropdownBtn">🛠️ Practical ▾</button>
+                <div class="nav-dropdown-content">
+                    <button class="nav-sub-btn" data-target="practical-mid">Mid-Term</button>
+                    <button class="nav-sub-btn" data-target="practical-final">Final-Term</button>
+                </div>
+            </div>
+
+            <button class="nav-btn" data-target="conduct">🤝 Conduct & Keenness</button>
+            <button class="nav-btn" data-target="consolidated">📊 Consolidated Result</button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            
+            <!-- ═════════ THEORY TAB ═════════ -->
+            <div class="tab-content active" id="tab-theory">
+                <div class="tab-header">
+                    <h2>Theory Marks Entry</h2>
+                    <button class="btn-save" id="saveTheoryBtn">Save Theory Marks</button>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-fixed">S.No</th>
+                                <th class="col-pers">Personnel No. & Rank</th>
+                                <th class="col-name">Name</th>
+                                <th>Mid-Term (Max/Obt)</th>
+                                <th>Final-Term P1 (Max/Obt)</th>
+                                <% if (course.courseName.includes("SENIOR FIRE SUPERVISOR")) { %>
+                                    <th>Final-Term P2 (Max/Obt)</th>
+                                <% } %>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% enrollments.forEach((enr, idx) => { %>
+                                <tr data-enrollment-id="<%= enr._id.toString() %>">
+                                    <td class="col-fixed"><%= idx + 1 %></td>
+                                    <td><%= enr.applicantId.personnelNumber %> - <%= enr.applicantId.rank %></td>
+                                    <td><%= enr.applicantId.name %></td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="number" placeholder="Max" class="theory-t-mid-max">
+                                            <input type="number" placeholder="Obt" class="theory-t-mid-obt">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="number" placeholder="Max" class="theory-t-fin1-max">
+                                            <input type="number" placeholder="Obt" class="theory-t-fin1-obt">
+                                        </div>
+                                    </td>
+                                    <% if (course.courseName.includes("SENIOR FIRE SUPERVISOR")) { %>
+                                    <td>
+                                        <div class="input-group">
+                                            <input type="number" placeholder="Max" class="theory-t-fin2-max">
+                                            <input type="number" placeholder="Obt" class="theory-t-fin2-obt">
+                                        </div>
+                                    </td>
+                                    <% } %>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═════════ PRACTICAL MID-TERM TAB ═════════ -->
+            <div class="tab-content" id="tab-practical-mid">
+                <div class="tab-header">
+                    <h2>Practical Marks (Mid-Term)</h2>
+                    <button class="btn-save" id="savePractMidBtn">Save Mid-Term Marks</button>
+                </div>
+                
+                <!-- Config Box Mid-Term -->
+                <div class="evaluator-box" style="flex-direction: column; align-items: stretch; gap: 12px;">
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <div class="form-control" style="flex: 1;">
+                                <label>Examiner:</label>
+                                <input type="text" id="pmExaminer" placeholder="Name of Examiner" style="width: 100%;">
+                            </div>
+                            <div class="form-control" style="flex: 1;">
+                                <label>Invigilator(s):</label>
+                                <input type="text" id="pmInvigilator" placeholder="Name of Invigilators" style="width: 100%;">
+                            </div>
+                        </div>
+                        <button class="btn-save" id="savePractMidConfigBtn" style="background: #0284c7;">Save Config</button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #bae6fd;">
+                        <div class="form-control"><label>Sub 1:</label><input type="text" id="pmSub1Title" placeholder="Title"> <input type="number" id="pmSub1Max" placeholder="Max"> <input type="number" id="pmSub1Min" placeholder="Min"></div>
+                        <div class="form-control"><label>Sub 2:</label><input type="text" id="pmSub2Title" placeholder="Title"> <input type="number" id="pmSub2Max" placeholder="Max"> <input type="number" id="pmSub2Min" placeholder="Min"></div>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-fixed">S.No</th>
+                                <th class="col-pers">Personnel No. & Rank</th>
+                                <th class="col-name">Name</th>
+                                <th id="pmThSub1">Sub 1<br><span class="sub-max-min" id="pmThSub1MaxMin">(00/00)</span></th>
+                                <th id="pmThSub2">Sub 2<br><span class="sub-max-min" id="pmThSub2MaxMin">(00/00)</span></th>
+                                <th>Total Marks<br><span class="sub-max-min" id="pmThTotalMaxMin">(00/00)</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% enrollments.forEach((enr, idx) => { %>
+                                <tr data-enrollment-id="<%= enr._id.toString() %>">
+                                    <td class="col-fixed"><%= idx + 1 %></td>
+                                    <td><%= enr.applicantId.personnelNumber %> - <%= enr.applicantId.rank %></td>
+                                    <td><%= enr.applicantId.name %></td>
+                                    <td><input type="number" class="pm-mark pm-sub-1" placeholder="Marks"></td>
+                                    <td><input type="number" class="pm-mark pm-sub-2" placeholder="Marks"></td>
+                                    <td><input type="text" class="pm-total" readonly style="background:#f8fafc; font-weight:bold;" placeholder="Auto"></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═════════ PRACTICAL FINAL-TERM TAB ═════════ -->
+            <div class="tab-content" id="tab-practical-final">
+                <div class="tab-header">
+                    <h2>Practical Marks (Final-Term)</h2>
+                    <button class="btn-save" id="savePractFinalBtn">Save Final-Term Marks</button>
+                </div>
+                
+                <!-- Config Box Final-Term -->
+                <div class="evaluator-box" style="flex-direction: column; align-items: stretch; gap: 12px;">
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <div class="form-control" style="flex: 1;">
+                                <label>Examiner:</label>
+                                <input type="text" id="pfExaminer" placeholder="Name of Examiner" style="width: 100%;">
+                            </div>
+                            <div class="form-control" style="flex: 1;">
+                                <label>Invigilator(s):</label>
+                                <input type="text" id="pfInvigilator" placeholder="Name of Invigilators" style="width: 100%;">
+                            </div>
+                        </div>
+                        <button class="btn-save" id="savePractFinalConfigBtn" style="background: #0284c7;">Save Config</button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 16px; flex-wrap: wrap; background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #bae6fd;">
+                        <div class="form-control"><label>Sub 1:</label><input type="text" id="pfSub1Title" placeholder="Title"> <input type="number" id="pfSub1Max" placeholder="Max"> <input type="number" id="pfSub1Min" placeholder="Min"></div>
+                        <div class="form-control"><label>Sub 2:</label><input type="text" id="pfSub2Title" placeholder="Title"> <input type="number" id="pfSub2Max" placeholder="Max"> <input type="number" id="pfSub2Min" placeholder="Min"></div>
+                        <div class="form-control"><label>Sub 3:</label><input type="text" id="pfSub3Title" placeholder="Title"> <input type="number" id="pfSub3Max" placeholder="Max"> <input type="number" id="pfSub3Min" placeholder="Min"></div>
+                        <div class="form-control"><label>Viva:</label><input type="text" id="pfSub4Title" value="Viva Voce" readonly style="background:#f1f5f9;"> <input type="number" id="pfSub4Max" placeholder="Max"> <input type="number" id="pfSub4Min" placeholder="Min"></div>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-fixed">S.No</th>
+                                <th class="col-pers">Personnel No. & Rank</th>
+                                <th class="col-name">Name</th>
+                                <th id="pfThSub1">Sub 1<br><span class="sub-max-min" id="pfThSub1MaxMin">(00/00)</span></th>
+                                <th id="pfThSub2">Sub 2<br><span class="sub-max-min" id="pfThSub2MaxMin">(00/00)</span></th>
+                                <th id="pfThSub3">Sub 3<br><span class="sub-max-min" id="pfThSub3MaxMin">(00/00)</span></th>
+                                <th id="pfThSub4">Viva<br><span class="sub-max-min" id="pfThSub4MaxMin">(00/00)</span></th>
+                                <th>Total Marks<br><span class="sub-max-min" id="pfThTotalMaxMin">(00/00)</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% enrollments.forEach((enr, idx) => { %>
+                                <tr data-enrollment-id="<%= enr._id.toString() %>">
+                                    <td class="col-fixed"><%= idx + 1 %></td>
+                                    <td><%= enr.applicantId.personnelNumber %> - <%= enr.applicantId.rank %></td>
+                                    <td><%= enr.applicantId.name %></td>
+                                    <td><input type="number" class="pf-mark pf-sub-1" placeholder="Marks"></td>
+                                    <td><input type="number" class="pf-mark pf-sub-2" placeholder="Marks"></td>
+                                    <td><input type="number" class="pf-mark pf-sub-3" placeholder="Marks"></td>
+                                    <td><input type="number" class="pf-mark pf-sub-4" placeholder="Marks"></td>
+                                    <td><input type="text" class="pf-total" readonly style="background:#f8fafc; font-weight:bold;" placeholder="Auto"></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═════════ CONDUCT & KEENNESS TAB ═════════ -->
+            <div class="tab-content" id="tab-conduct">
+                <div class="tab-header">
+                    <h2>Conduct & Keenness</h2>
+                    <div class="header-actions">
+                        <div class="dropdown" id="conductDropdown">
+                            <button class="btn-download" id="downloadDropdownBtn">⬇ Download ▾</button>
+                            <div class="dropdown-content">
+                                <a href="#" id="downloadExaminerBtn">Download Examiner Sheet</a>
+                                <a href="#" id="downloadMarksBtn">Download Marks Sheet</a>
+                            </div>
+                        </div>
+                        <button class="btn-save" id="saveConductMarksBtn">Save Marks</button>
+                    </div>
+                </div>
+                
+                <div class="evaluator-box">
+                    <div class="config-group">
+                        <div class="form-control">
+                            <label>Max Marks:</label>
+                            <input type="number" id="configMaxMarks" value="15">
+                        </div>
+                        <div class="form-control">
+                            <label>Min Marks:</label>
+                            <input type="number" id="configMinMarks" value="09">
+                        </div>
+                        <div class="divider"></div>
+                        <div class="form-control">
+                            <label>Evaluator 1:</label>
+                            <input type="text" id="evalName1" placeholder="Name">
+                        </div>
+                        <div class="form-control">
+                            <label>Evaluator 2:</label>
+                            <input type="text" id="evalName2" placeholder="Name">
+                        </div>
+                        <div class="form-control">
+                            <label>Evaluator 3:</label>
+                            <input type="text" id="evalName3" placeholder="Name">
+                        </div>
+                    </div>
+                    <button class="btn-save" id="saveConfigBtn" style="background: #0284c7;">Save Config</button>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-fixed">S.No</th>
+                                <th class="col-pers">Personnel No. & Rank</th>
+                                <th class="col-name">Name</th>
+                                <th id="thEval1">Evaluator 1</th>
+                                <th id="thEval2">Evaluator 2</th>
+                                <th id="thEval3">Evaluator 3</th>
+                                <th>Average Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% enrollments.forEach((enr, idx) => { %>
+                                <tr data-enrollment-id="<%= enr._id.toString() %>">
+                                    <td class="col-fixed"><%= idx + 1 %></td>
+                                    <td><%= enr.applicantId.personnelNumber %> - <%= enr.applicantId.rank %></td>
+                                    <td><%= enr.applicantId.name %></td>
+                                    <td><input type="number" class="eval-mark conduct-eval-1" placeholder="0-15"></td>
+                                    <td><input type="number" class="eval-mark conduct-eval-2" placeholder="0-15"></td>
+                                    <td><input type="number" class="eval-mark conduct-eval-3" placeholder="0-15"></td>
+                                    <td><input type="text" class="total-avg" readonly style="background:#f8fafc; font-weight:bold;" placeholder="Auto"></td>
+                                </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ═════════ CONSOLIDATED TAB ═════════ -->
+            <div class="tab-content" id="tab-consolidated">
+                <div class="tab-header">
+                    <h2>Consolidated Result (View Only)</h2>
+                    <button class="btn-save" id="exportConsolidatedBtn">Export Consolidated PDF</button>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="col-fixed">S.No</th>
+                                <th class="col-pers">Personnel No. & Rank</th>
+                                <th class="col-name">Name</th>
+                                <th>Theory Total</th>
+                                <th>Practical Total</th>
+                                <th>Conduct Avg</th>
+                                <th>Grand Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="7" class="empty-state">
+                                    Consolidated data will appear here.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        window.courseId = "<%= course._id.toString() %>";
+        window.courseConfig = <%- JSON.stringify(course.conductConfig || { maxMarks: 15, minMarks: 9, evaluators: [{key: "eval_1", name: ""}, {key: "eval_2", name: ""}, {key: "eval_3", name: ""}] }) %>;
+        window.practicalConfig = <%- JSON.stringify(course.practicalConfig || {}) %>;
+        window.results = <%- JSON.stringify(results || []) %>;
+    </script>
+    <script src="/js/result/show.js"></script>
+</body>
+</html>

@@ -32,6 +32,51 @@ const courseSchema = new mongoose.Schema({
     required: true,
   },
   courseDuration: Number,
+
+  practicalConfig: {
+    midTerm: {
+      examinerName: { type: String, trim: true, default: "" },
+      invigilatorName: { type: String, trim: true, default: "" },
+      subjects: {
+        type: [{ title: String, maxMarks: Number, minMarks: Number }],
+        default: [
+          { title: "Subject 1", maxMarks: 50, minMarks: 20 },
+          { title: "Subject 2", maxMarks: 50, minMarks: 20 },
+        ],
+      },
+    },
+    finalTerm: {
+      examinerName: { type: String, trim: true, default: "" },
+      invigilatorName: { type: String, trim: true, default: "" },
+      subjects: {
+        type: [{ title: String, maxMarks: Number, minMarks: Number }],
+        default: [
+          { title: "Subject 1", maxMarks: 50, minMarks: 20 },
+          { title: "Subject 2", maxMarks: 50, minMarks: 20 },
+          { title: "Subject 3", maxMarks: 50, minMarks: 20 },
+          { title: "Viva Voce", maxMarks: 50, minMarks: 20 },
+        ],
+      },
+    },
+  },
+
+  conductConfig: {
+    maxMarks: { type: Number, default: 15 },
+    minMarks: { type: Number, default: 9 },
+    evaluators: {
+      type: [
+        {
+          key: { type: String, required: true },
+          name: { type: String, trim: true },
+        },
+      ],
+      default: [
+        { key: "eval_1", name: "" },
+        { key: "eval_2", name: "" },
+        { key: "eval_3", name: "" },
+      ],
+    },
+  },
 });
 
 courseSchema.pre("save", function () {

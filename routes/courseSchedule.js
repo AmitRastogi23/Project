@@ -112,87 +112,82 @@ router.post(
       !endTime ||
       !type
     ) {
-      return res.status(400).json({
-        success: false,
-        message: "Missing required fields",
-      });
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing required fields" });
     }
 
     let courseSchedule = await CourseSchedule.findOne({ course: courseId });
 
     if (!courseSchedule) {
       const course = await Course.findById(courseId);
-      if (!course) {
-        return res.status(404).json({
-          success: false,
-          message: "Course not found",
-        });
-      }
+      if (!course)
+        return res
+          .status(404)
+          .json({ success: false, message: "Course not found" });
       const year = await Year.findById(course.year);
       const holidays = year?.holidays || [];
-
       const weeks = generateWeeks(
         course.startDate,
         course.endDate,
         holidays,
         defaultDailySessions,
       );
-      courseSchedule = await CourseSchedule.create({
-        course: courseId,
-        weeks: weeks,
-      });
+      courseSchedule = await CourseSchedule.create({ course: courseId, weeks });
     }
 
     const week = courseSchedule.weeks[parseInt(weekIndex)];
-    if (!week) {
-      return res.status(404).json({
-        success: false,
-        message: "Week not found",
-      });
-    }
+    if (!week)
+      return res
+        .status(404)
+        .json({ success: false, message: "Week not found" });
 
     const day = week.days[parseInt(dayIndex)];
-    if (!day) {
-      return res.status(404).json({
-        success: false,
-        message: "Day not found",
-      });
-    }
+    if (!day)
+      return res.status(404).json({ success: false, message: "Day not found" });
 
-    const sessionData = {
-      startTime,
-      endTime,
-      type,
-    };
-
-    if (title && title.trim()) {
-      sessionData.title = title.trim();
-    }
+    const sessionData = { startTime, endTime, type };
+    if (title && title.trim()) sessionData.title = title.trim();
 
     if (faculty && faculty.trim()) {
       if (mongoose.isValidObjectId(faculty)) {
         const facultyExists = await Faculty.findById(faculty);
-
-        if (facultyExists) {
+        if (facultyExists)
           sessionData.faculty = new mongoose.Types.ObjectId(faculty);
-        }
       } else {
         sessionData.faculty = faculty.trim();
       }
     }
 
-    if (location && location.trim()) {
-      sessionData.location = location.trim();
-    }
+    if (location && location.trim()) sessionData.location = location.trim();
 
     day.sessions.push(sessionData);
-
     await courseSchedule.save();
+
+    // Return the saved subdoc (has _id + populated faculty name if ObjectId)
+    const savedSession =
+      courseSchedule.weeks[parseInt(weekIndex)].days[
+        parseInt(dayIndex)
+      ].sessions.slice(-1)[0];
+
+    let facultyOut = savedSession.faculty;
+    if (facultyOut && mongoose.isValidObjectId(facultyOut)) {
+      const fac = await Faculty.findById(facultyOut).select("name _id");
+      facultyOut = fac ? { _id: fac._id, name: fac.name } : null;
+    }
 
     res.status(201).json({
       success: true,
       message: "Session added successfully",
-      session: sessionData,
+      session: {
+        _id: savedSession._id,
+        startTime: savedSession.startTime,
+        endTime: savedSession.endTime,
+        type: savedSession.type,
+        title: savedSession.title || "",
+        faculty: facultyOut,
+        location: savedSession.location || "",
+      },
     });
   }),
 );
@@ -301,10 +296,24 @@ router.put(
       });
     }
     await courseSchedule.save();
+
+    let facultyOut = updatedSession.faculty;
+    if (facultyOut && mongoose.isValidObjectId(facultyOut)) {
+      const fac = await Faculty.findById(facultyOut).select("name _id");
+      facultyOut = fac ? { _id: fac._id, name: fac.name } : null;
+    }
     return res.json({
       success: true,
       message: "Session updated successfully",
-      session: updatedSession,
+      session: {
+        _id: updatedSession._id,
+        startTime: updatedSession.startTime,
+        endTime: updatedSession.endTime,
+        type: updatedSession.type,
+        title: updatedSession.title || "",
+        faculty: facultyOut,
+        location: updatedSession.location || "",
+      },
     });
   }),
 );

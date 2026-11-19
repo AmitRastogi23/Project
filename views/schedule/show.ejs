@@ -381,6 +381,7 @@
 
 <script>
   window.courseId = "<%= course._id %>";
+  window.holidays = <%- JSON.stringify(holidays || []) %>;
 </script>
 <script src="/js/schedule/show.js"></script>
 </body>

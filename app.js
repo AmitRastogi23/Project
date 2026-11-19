@@ -12,6 +12,7 @@ const addressRoutes = require("./routes/address");
 const courseSchedule = require("./routes/courseSchedule");
 const noticeRoutes = require("./routes/notice");
 const honorariumRoutes = require("./routes/honorarium");
+const resultRoutes = require("./routes/result");
 
 const path = require("path");
 app.set("view engine", "ejs");
@@ -58,6 +59,7 @@ app.use("/address", addressRoutes);
 app.use("/course", courseSchedule);
 app.use("/course", noticeRoutes);
 app.use("/course", honorariumRoutes);
+app.use("/course", resultRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err);
